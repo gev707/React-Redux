@@ -1,0 +1,106 @@
+.singleCardHolder {
+    background: rgba(0, 0, 0, 0.6);
+    height:100vh;
+    width:100vw;
+    color:rgb(17, 68, 71);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.singleCardBody {
+    width:500px;
+    height:auto;
+    display: block;
+    background: #fff;
+    position: relative;
+    box-shadow: 5px -4px 5px rgb(0 0 0 /10%);
+    transform:perspective(600px) rotateY(-10deg);
+    -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0003);
+    transition: 0.5s ease;
+}
+.singleCardReducerBody {
+    width:500px;
+    height:auto;
+    display: block;
+    background: rgb(185, 164, 164);
+    position: relative;
+    box-shadow: 5px -4px 5px rgb(0 0 0 /10%);
+    transform:perspective(600px) rotateY(-10deg);
+    -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0003);
+    transition: 0.5s ease;
+}
+.singleCardReducerBody:hover {
+    box-shadow: 5px -4px 5px rgb(255 255 255 /10%);
+    transform:perspective(600px) rotateY(0deg);
+    -webkit-box-reflect:below 2px linear-gradient(transparent,transparent,#0005);
+}
+.singleCardBody:hover {
+    box-shadow: 5px -4px 10px rgb(255 255 255 /12%);
+    transform:perspective(600px) rotateY(0deg);
+    -webkit-box-reflect:below 2px linear-gradient(transparent,transparent,#0004);
+}
+.singleCardBody h1 {
+    color: #266c75;
+    margin: 10px 0 0  !important;
+    padding: 1rem;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 13%);
+    display: inline-block;
+    width: 100%;
+}
+.singleCardBody h2 {
+    margin-top: 1rem;
+    color: #266c75;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 13%)
+}
+.singleCardReducerBody h1 {
+    color: #266c75;
+    margin: 10px 0 0  !important;
+    padding: 1rem;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 13%);
+    display: inline-block;
+    width: 100%;
+}
+.singleCardReducerBody h2 {
+    margin-top: 1rem;
+    color: #266c75;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 13%)
+}
+.singleCardBtns button{
+    background: none;
+    border:2px solid #305563;
+    color:#305563;
+    padding:10px 50px;
+    font-size: 20px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    transition: all 0.5s ease;
+    margin: 0 5px;
+}
+.singleCardBtns button:hover{
+    background: #305563;
+    border:2px solid #305563;
+    color:#FFF;
+    padding:10px 50px;
+    font-size: 20px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    transition: all 0.5s ease;
+    margin: 0 5px;
+    opacity: 1;
+}
+.singleCardBtns{
+    
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0 1rem;
+}
+.spinner {
+    width:100vw;
+    height:100vh;
+}
+.goBackPage{
+    position: fixed;
+    top:15px;
+    left:30px;
+}

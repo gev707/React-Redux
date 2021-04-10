@@ -1,0 +1,98 @@
+.taskHolder {
+    position: relative;
+    display: block;
+    width:300px;
+    height:auto;
+    box-shadow: 2px 5px 20px rgb(255 255 255 / 25%);
+    font-weight: 700;
+    text-transform: capitalize;
+    padding:1rem;
+    margin: 2.5rem 1rem;
+    word-break: break-all;
+    transition: all 0.2s ease;
+
+}
+.tasks{
+    position: relative;
+    display: block;
+    box-shadow: 0px 0px 8px rgb(250 250 250 / 20%);
+    width:280px;
+    height:auto;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding:1rem;
+    margin: 2.5rem 1rem;
+    word-break: break-all;
+    transition: all 0.2s ease;
+    font-size:13px;
+    color:#000;
+}
+.check{
+    position: absolute;
+    top:5px;
+    left:5px; 
+}
+.taskFlex{
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.para {
+    margin: 0;
+    padding: 20px 0;
+    font-size: 18px;
+}
+.taskBtn{
+    padding: 10px;
+    background: none;
+    border:none;
+    box-shadow: 2px 5px 20px rgb(255 255 255 / 25%);
+    width: 55px;
+    height:55px;
+    font-size: 22px;
+    margin: 0.5rem;
+    border-radius: 50%;
+    text-align: center;
+}
+.taskBtn:hover svg{
+  color:#305563
+}
+
+.taskBtn:disabled  svg{
+    color: #ddd;
+    cursor:not-allowed;
+}
+.taskHolder svg{
+    font-size: 2rem;
+    cursor: pointer;
+    font-size: 25px;
+    color: rgb(192, 195, 201);
+    transition:all 0.3s ease;
+}
+.taskHolder input[type="checkbox"] {
+    display: block;
+    opacity: 0.3;
+ }
+input[type="checkbox"]:checked {
+    opacity: 1;
+}
+.taskFlex a  {
+    color:#ddd;
+    font-size: 30px;
+    transition: 0.3s ease-in-out;
+}
+
+.taskFlex a:hover  {
+    color:#1c2e35;
+    text-decoration-line: none;
+}
+.description {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 5px 50px;
+}
+.tasks .description {
+    padding: 5px;
+    line-height: 25px;
+}
