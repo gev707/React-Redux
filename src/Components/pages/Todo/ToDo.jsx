@@ -1,238 +1,58 @@
 import React from "react";
 import Task from '../../Tasks/Task';
-import Modal from '../../Modal/Modal'
+import Modal from '../../Modal/Modal';
+import EditModal from '../../Modal/EditModal'
 import Confirm from '../../Confirm/Confirm';
 import styles from "./todo.module.css";
 import Spinner from "../../Spinner/Spinner";
-
-
-const API_HOST = 'http://localhost:3001';
+import { connect } from 'react-redux';
+//thunks
+import {
+    setCardsThunk,
+    addCardThunk,
+    deleteOneCardThunk,
+    deleteAllCheckedCardThunk,
+} from "../../../Redux/action";
 
 class Todo extends React.Component {
     state = {
-        cards: [],
-        checkedCards: new Set(),
-        isOpenModal: false,
-        isOpenConfirm: false,
-        editCard: null,
-        loading: false,
-       
-    };
-
-    /** 
-     * toggle functions 
-     * 1-toggleSetCardModal 
-     * 2-toggleOpenModal
-     * 3-toggleOpenConfirm
-     * 4-toggleCheckedAllCards
-     * 5-handleToggleCheckCards
-    */
-
-    toggleSetCardModal = (editCard = null) => {
+        editCard: null
+    }
+    toggleEditModal = (card) => {
         this.setState({
-            editCard
+            editCard: card
         })
     }
-    
-    toggleOpenModal = () => {
-        const { isOpenModal } = this.state
-        this.setState({
-            isOpenModal: !isOpenModal
-        })
-    }
-    toggleOpenConfirm = () => {
-        const { isOpenConfirm } = this.state
-        this.setState({
-            isOpenConfirm: !isOpenConfirm
-        })
-    }
-    toggleCheckedAllCards = () => {
-        let checkedCards = this.state.checkedCards;
-        let { cards } = this.state;
-
-        if (cards.length === checkedCards.size) checkedCards.clear();
-        else cards.forEach(card => {
-            checkedCards.add(card._id);
-        })
-        this.setState({
-            checkedCards
-        })
-
-    }
-    handleToggleCheckCards = (_id) => {
-        let checkedCards = new Set(this.state.checkedCards)
-        if (!checkedCards.has(_id)) checkedCards.add(_id);
-        else checkedCards.delete(_id);
-        this.setState({
-            checkedCards
-        });
-    }
-
-    /** 
-     * add and edit functions
-     * 1-addCard 
-     * 2-handleEditCard
-    */
-
-    addCard = (formData) => {
-        this.setState({ loading: true })
-        fetch(`${API_HOST}/task`, {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) throw data.error
-                const cards = [...this.state.cards];
-                cards.push(data)
-                this.setState({
-                    cards,
-                    isOpenModal: !this.state.isOpenModal
-
-                })
-            })
-            .catch(error => {
-                console.log(error)
-            })
-            .finally(() => {
-                this.setState({ loading: false })
-            })
-    };
-
-    handleEditCard = (editCard) => {
-        this.setState({ loading: true })
-        fetch(`${API_HOST}/task/${editCard._id}`, {
-            method: 'PUT',
-            body: JSON.stringify(editCard),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) throw data.error;
-                const cards = [...this.state.cards];
-                const index = cards.findIndex(card => card._id === editCard._id)
-                cards[index] = editCard;
-                this.setState({
-                    cards,
-                    editCard: null
-                })
-            })
-            .catch(error => {
-                console.log('Catch Error', error)
-            })
-            .finally(() => {
-                this.setState({ loading: false })
-            })
-    }
-
-    /**
-     * delete functions
-     */
-
-    deleteCard = (id) => {
-        this.setState({ loading: true });
-        fetch(`${API_HOST}/task/${id}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) throw data.error;
-                let cards = [...this.state.cards];
-                cards = cards.filter(card => card._id !== id)
-                this.setState({
-                    cards
-                })
-            })
-            .catch(error => {
-                console.log('Catch Error', error)
-            })
-            .finally(() => {
-                this.setState({
-                    loading: false
-                })
-            })
-    }
-
-    deleteCheckedCard = () => {
-        this.setState({ loading: true });
-        const { checkedCards } = this.state;
-        fetch(`${API_HOST}/task`, {
-            method: 'PATCH',
-            body: JSON.stringify({ tasks: [...checkedCards] }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) throw data.error;
-                let cards = this.state.cards;
-                cards = cards.filter(card => !checkedCards.has(card._id));
-                this.setState({
-                    cards,
-                    checkedCards: new Set(),
-                    isOpenConfirm: !this.state.isOpenConfirm
-                })
-            })
-            .catch(error => {
-                console.log('Catch Error', error)
-            })
-            .finally(() => {
-                this.setState({
-                    loading: false
-                })
-            })
-    }
-
-    getSingleCardFromCheckedCards = () => {
-        if (this.state.checkedCards.size !== 1) {
-            return
-        }
-        let id = null;
-        this.state.checkedCards.forEach(_id => {
-            id = _id
-        })
-
-        return this.state.cards.find(card => card._id === id)
-    };
-
     componentDidMount() {
-        this.setState({ loading: true });
-        fetch(`${API_HOST}/task`,)
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) throw data.error
-                this.setState({
-                    cards: data
-                })
+        this.props.setCard()
+    }
+    componentDidUpdate = (prevProps) => {
+        if (!prevProps.editSuccess && this.props.editSuccess) {
+            this.setState({
+                editCard: null
             })
-            .catch(error => {
-                console.log(error)
-            })
-            .finally(() => {
-                this.setState({
-                    loading: false
-                })
-            })
+        }
     }
     render() {
-        const { cards, checkedCards, isOpenModal, isOpenConfirm, editCard, loading} = this.state;
+        const {
+            cards,
+            checkedCards,
+            isOpenModal,
+            isOpenConfirm,
+            isCheckedCard,
+            loading,
+        } = this.props;
+        const { editCard } = this.state
         const card = cards.map(card => {
             return <Task
                 card={card}
                 key={card._id}
-                deleteCard={this.deleteCard}
-                handleToggleCheckCards={this.handleToggleCheckCards}
+                deleteCard={this.props.deleteCurrentCard}
+                handleToggleCheckCards={this.props.toggleCheckCard}
                 isAnyCardChecked={checkedCards.size}
                 isChecked={checkedCards.has(card._id)}
-                toggleOpenModal={this.toggleOpenModal}
-                setEditableCard={this.toggleSetCardModal}
-                
+                toggleOpenModal={this.props.toggleOpenModal}
+                onEdit={this.toggleEditModal}
             />
         });
         return (
@@ -242,21 +62,21 @@ class Todo extends React.Component {
                     <div className={styles.inputHolder}>
                         <button
                             className={styles.btnAddText}
-                            onClick={this.toggleOpenModal}
+                            onClick={this.props.toggleOpenModal}
                             disabled={checkedCards.size !== 0}
                         >Add Card Modal
                         </button>
                     </div>
                     <div className={styles.btnHolder}>
                         <button
-                            onClick={this.toggleOpenConfirm}
+                            onClick={this.props.toggleOpenConfirm}
                             className={styles.btnDeleteAll}
                             disabled={cards.length === 0}
                         >
                             Delete All Cards
                         </button>
                         <button
-                            onClick={this.toggleCheckedAllCards}
+                            onClick={this.props.toggleCheckedAll}
                             className={styles.btnCheckAll}
                             disabled={cards.length === 0}
                         >
@@ -274,30 +94,66 @@ class Todo extends React.Component {
 
                 {
                     isOpenModal && <Modal
-                        onHide={this.toggleOpenModal}
-                        onSubmit={this.addCard}
+                        onHide={this.props.toggleOpenModal}
+                        onSubmit={this.props.addCard}
                     />
                 }
                 {
-                    editCard && <Modal
-                        onHide={this.toggleSetCardModal}
-                        onSubmit={this.handleEditCard}
+                    !!editCard && <EditModal
+                        onHide={() => this.toggleEditModal(null)}
                         editCard={editCard}
                     />
                 }
                 {
                     isOpenConfirm && <Confirm
-                        onHide={this.toggleOpenConfirm}
-                        deleteCard={this.deleteCheckedCard}
-                        countOrCardTitle={checkedCards.size !== 1 ? checkedCards.size : this.getSingleCardFromCheckedCards().title}
+                        onHide={this.props.toggleOpenConfirm}
+                        deleteCard={() => this.props.deleteCheckedCard(checkedCards)}
+                        countOrCardTitle={isCheckedCard ? isCheckedCard.title : checkedCards.size}
                     />
                 }
                 {
                     loading && <Spinner />
                 }
-               
+
             </section>
         )
     }
 }
-export default Todo
+const mapStateToProps = state => {
+    console.log(state)
+    const {
+        cards,
+        editSuccess,
+        isOpenModal,
+        isOpenConfirm,
+        checkedCards,
+        deleteCardId,
+        isCheckedCard } = state.todoState
+    return {
+        cards,
+        editSuccess,
+        isOpenModal,
+        isOpenConfirm,
+        checkedCards,
+        deleteCardId,
+        isCheckedCard,
+        loading: state.loading
+    }
+
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        setCard: () => dispatch(setCardsThunk),
+        addCard: (data) => dispatch((dispatch) => addCardThunk(dispatch, data)),
+        deleteCurrentCard: (_id) => dispatch((dispatch) => deleteOneCardThunk(dispatch, _id)),
+        deleteId: _id => dispatch({ type: 'DELETE_CARD_ID', _id }),
+        deleteCheckedCard: (checkedCards) => dispatch((dispatch) => deleteAllCheckedCardThunk(dispatch, checkedCards)),
+        toggleCheckCard: _id => dispatch({ type: 'TOGGLE_CHECK_CARD', _id }),
+        toggleCheckedAll: () => dispatch({ type: 'TOGGLE_CHECK_ALL_CARDS' }),
+        toggleOpenModal: () => dispatch({ type: 'TOGGLE_OPEN_MODAL' }),
+        toggleOpenConfirm: () => dispatch({ type: 'TOGGLE_CONFIRM_MODAL' }),
+        closeEditModal: () => dispatch({ type: 'CLOSE_EDIT_MODAL' })
+    }
+
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Todo)

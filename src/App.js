@@ -9,11 +9,10 @@ import ContactWithReducer from './Components/pages/Contact/Contacts/ContactWithR
 import ContactPage from './Components/pages/Contact/ContactPage'
 import Contact from './Components/pages/Contact/Contact'
 import NotFound from './Components/pages/NotFound/NotFound';
-import SingleCard from './Components/pages/SingleCard/SingleCard';
-import SingleCardWithReducer from './Components/pages/SingleCard/SingleCardWithReducer'
-//
-import SinglePageProvider from './Context/providers/SinglePageProvider'
-//
+
+import SingleCard from './Components/pages/SingleCard/SingleCard'
+
+
 import { Route, Switch, Redirect } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -56,14 +55,10 @@ const router = [
     path: '/404',
     exact: true
   },
+  
   {
     component: SingleCard,
     path: '/card/:id',
-    exact: true
-  },
-  {
-    component: SingleCardWithReducer,
-    path: '/single-card/:id',
     exact: true
   },
   {
@@ -85,22 +80,6 @@ class App extends React.Component {
   }
   render() {
     const rout = router.map((item, index) => {
-      if (item.path === '/card/:id') {
-        return (
-          <Route
-            key={index}
-            path={item.path}
-            render={(props) => (
-              <SinglePageProvider {...props}>
-                <item.component {...props} />
-              </SinglePageProvider>
-            )
-
-            }
-            exact={item.exact}
-          />
-        )
-      }
       return (
         <Route
           key={index}

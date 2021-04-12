@@ -30,26 +30,28 @@ class Modal extends PureComponent {
             date:dateFormat(this.state.date)
         }
         this.props.onSubmit(formData);
+       
     };
     setDate = (date) => {
         this.setState({
             date
         })
     }
+   
     
 
     render(){
-        const {onHide,editCard} = this.props;
+        const {onHide} = this.props;
         const {title,description,date} = this.state
-        
-        return (
-                <div 
+      
+       return (
+               <div 
                      className={styles.modalHolder}
                 > 
                     <div  className={styles.closeModal}>
-                        <span onClick={event=>onHide()}></span>
+                        <span onClick={()=>onHide()}></span>
                     </div>
-                    <h2>{editCard?"Edit Card" :'Create Your Card'}</h2>
+                    <h2>Create Your Card</h2>
                     <div className='p-2'>
                         <div className={styles.inputHolder}>
                             <input
@@ -84,13 +86,16 @@ class Modal extends PureComponent {
                     </div>
                     <div className={styles.btnSave}>
                         <button 
-                            onClick={(e) => onHide()}
+                            onClick={() => onHide()}
                             >Close Card
                         </button>
-                        <button 
+                         <button 
                             onClick={this.handleSubmit}
-                            >{editCard ? 'Save Card':'Add Card' }
-                        </button>
+                            >Add Modal
+                        </button> 
+                       
+                       
+
                     </div>
                 </div>
         )
@@ -101,4 +106,5 @@ Modal.propTypes = {
     editCard:PropTypes.object,
     onSubmit:PropTypes.func.isRequired
 }
-export default Modal
+
+export default (Modal)
