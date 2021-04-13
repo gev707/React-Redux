@@ -1,25 +1,27 @@
-
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import types from './action.Types'
+
 const initialState = {
     todoState: {
         cards: [],
+        editableCard:null,
         isOpenModal: false,
         isOpenConfirm: false,
         checkedCards: new Set(),
         deleteCardId: null,
         isCheckedCard: null,
-        editSuccess: false,
+        isEditModalOpen: false
     },
     singleCard: {},
     loading: false,
-    isEditModalOpen: false
+    editSuccess: false
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case 'SET_CARDS': {
+        case types.SET_CARDS: {
             return {
                 ...state,
                 todoState: {
@@ -28,7 +30,7 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case 'ADD_CARD': {
+        case types.ADD_CARD: {
             const cards = [...state.todoState.cards];
             cards.push(action.data)
             return {
@@ -40,17 +42,13 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case 'SET_OR_REMOVE_LOADING': {
+        case types.SET_OR_REMOVE_LOADING: {
             return {
                 ...state,
-                todoState: {
-                    ...state.todoState,
-                    editSuccess: false
-                },
                 loading: action.isLoading
             }
         }
-        case 'TOGGLE_OPEN_MODAL': {
+        case types.TOGGLE_OPEN_MODAL: {
             return {
                 ...state,
                 todoState: {
@@ -59,7 +57,7 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case 'TOGGLE_CONFIRM_MODAL': {
+        case types.TOGGLE_CONFIRM_MODAL: {
             const { checkedCards, cards } = state.todoState;
             let isCheckedCard = null;
             if (checkedCards.size === 1)
@@ -73,9 +71,7 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-
-
-        case 'DELETE_ONE_CARD': {
+        case types.DELETE_ONE_CARD: {
             let cards = [...state.todoState.cards];
             cards = cards.filter(card => card._id !== action._id)
             return {
@@ -86,7 +82,7 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case 'DELETE_CARD_ID': {
+        case types.DELETE_CARD_ID: {
             return {
                 ...state,
                 todoState: {
@@ -95,7 +91,7 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case 'TOGGLE_CHECK_CARD': {
+        case types.TOGGLE_CHECK_CARD: {
             const { _id } = action;
             let checkedCards = new Set(state.todoState.checkedCards)
             if (!checkedCards.has(_id)) checkedCards.add(_id);
@@ -108,7 +104,7 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case 'TOGGLE_CHECK_ALL_CARDS': {
+        case types.TOGGLE_CHECK_ALL_CARDS: {
             let cards = state.todoState.cards;
             let checkedCards = new Set(state.todoState.checkedCards)
             if (cards.length === checkedCards.size) checkedCards.clear();
@@ -121,7 +117,7 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case 'DELETE_CHECKED_CARDS': {
+        case types.DELETE_CHECKED_CARDS: {
             let { cards } = state.todoState;
             const checkedCards = state.todoState.checkedCards
             cards = cards.filter(card => !checkedCards.has(card._id));
@@ -135,31 +131,38 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-
-        case "EDIT_CARD": {
-
+        case types.EDIT_CARD: {
             const cards = [...state.todoState.cards];
-            const index = cards.findIndex(card => card._id === action.card._id)
-            cards[index] = action.card;
+            const index = cards.findIndex(card => card._id === action.data._id)
+            cards[index] = action.data;
+            
+            return {
+                ...state,
+                todoState:{
+                    ...state.todoState,
+                    editableCard:null,
+                    cards
+                },
+                isEditModalOpen:!state.isEditModalOpen
+            }
+        }
+        case types.TOGGLE_OPEN_EDIT_MODAL: {
             return {
                 ...state,
                 todoState: {
                     ...state.todoState,
-                    cards,
-                    editSuccess: true
-                }
+                    editableCard:action.editCard,
+                },
             }
-
-
         }
         // Single card
-        case 'GET_SINGLE_CARD': {
+        case types.GET_SINGLE_CARD: {
             return {
                 ...state,
                 singleCard: action.data
             }
         }
-        case 'DELETE_SINGLE_CARD': {
+        case types.DELETE_SINGLE_CARD: {
             return {
                 ...state,
                 singleCard: {
@@ -168,10 +171,10 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
-        case 'TOGGLE_OPEN_EDIT_MODAL': {
+        case types.OPEN_EDIT_MODAL: {
             return {
                 ...state,
-                isEditModalOpen: !state.isEditModalOpen
+                isEditModalOpen:!state.isEditModalOpen
             }
         }
         default: return state

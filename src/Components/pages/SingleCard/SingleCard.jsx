@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import {
     getSingleCardThunk,
     deleteSingleCardThunk,
+    editCardThunk
 } from '../../../Redux/action'
 import React, { PureComponent } from 'react'
 import EditModal from '../../Modal/EditModal';
@@ -26,9 +27,13 @@ class SingleCardWithReducer extends PureComponent {
     toggleModal = () => {
         this.props.toggleOpenModal()
     }
+    handleEditCard = (singleCard)=> {
+        this.props.editedCard(singleCard)
+    }
     render() {
 
-        const { singleCard, isEditModalOpen } = this.props;
+        const { singleCard,isEditModalOpen } = this.props;
+        console.log(this.props)
 
 
         if (singleCard === {}) return <Spinner />
@@ -57,7 +62,7 @@ class SingleCardWithReducer extends PureComponent {
                                     <FontAwesomeIcon icon={faTrashAlt} />
                                 </button>
                                 <button
-                                    onClick={this.toggleModal}
+                                    onClick={this.props.toggleOpenModal}
                                 >
                                     <FontAwesomeIcon icon={faAddressCard} />
                                 </button>
@@ -66,10 +71,10 @@ class SingleCardWithReducer extends PureComponent {
                         </div>
                     </div>
                     {
-                        isEditModalOpen && <EditModal
-                            onHide={this.toggleModal}
-                            editCard={singleCard}
-
+                        !!isEditModalOpen && <EditModal
+                            onHide={this.props.toggleOpenModal}
+                            onSubmit={this.handleEditCard} 
+                            editCard={singleCard}  
                         />
                     }
                 </>
@@ -79,6 +84,7 @@ class SingleCardWithReducer extends PureComponent {
     }
 }
 const mapStateToProps = state => {
+    console.log(state);
     return {
         singleCard: state.singleCard,
         isEditModalOpen: state.isEditModalOpen
@@ -88,7 +94,8 @@ const mapDispatchToProps = dispatch => {
     return {
         getSingleCard: (data) => dispatch((dispatch) => getSingleCardThunk(dispatch, data)),
         deleteSingleCard: (data) => dispatch((dispatch) => deleteSingleCardThunk(dispatch, data)),
-        toggleOpenModal: () => dispatch({ type: 'TOGGLE_OPEN_EDIT_MODAL' }),
+        editedCard:(data) => dispatch((dispatch) => editCardThunk(dispatch,data)),
+        toggleOpenModal: () => dispatch({ type: 'OPEN_EDIT_MODAL'}),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SingleCardWithReducer)

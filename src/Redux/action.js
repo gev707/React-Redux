@@ -3,6 +3,7 @@ import types from './action.Types'
 const API_HOST = 'http://localhost:3001';
 
 export const setCardsThunk = dispatch => {
+    
     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
     fetch(`${API_HOST}/task`)
         .then(res => res.json())
@@ -17,6 +18,7 @@ export const setCardsThunk = dispatch => {
 };
 
 export const addCardThunk = (dispatch, formData) => {
+
     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
     fetch(`${API_HOST}/task`, {
         method: 'POST',
@@ -38,6 +40,7 @@ export const addCardThunk = (dispatch, formData) => {
 };
 
 export const deleteOneCardThunk = (dispatch, _id) => {
+
     dispatch({ type: types.DELETE_CARD_ID, _id })
     fetch(`${API_HOST}/task/${_id}`, {
         method: 'DELETE',
@@ -51,9 +54,11 @@ export const deleteOneCardThunk = (dispatch, _id) => {
             console.log('Catch Error', error)
         })
         .finally(() => dispatch({ type: types.DELETE_CARD_ID, _id }))
+
 };
 
 export const deleteAllCheckedCardThunk = (dispatch, checkedCards) => {
+
     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
     fetch(`${API_HOST}/task`, {
         method: 'PATCH',
@@ -76,33 +81,31 @@ export const deleteAllCheckedCardThunk = (dispatch, checkedCards) => {
 
 
 
-export const editCardThunk = (data, single) => {
-    return (dispatch) => {
-        dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
-        fetch(`${API_HOST}/task/${data._id}`, {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+export const editCardThunk = (dispatch, editCard) => {
+    dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
+    fetch(`${API_HOST}/task/${editCard._id}`, {
+        method: 'PUT',
+        body: JSON.stringify(editCard),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) throw data.error;
+            dispatch({ type: 'EDIT_CARD', data: data })
         })
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) throw data.error;
-                dispatch({ type: 'EDIT_CARD', card: data, single })
-
-            })
-            .catch(error => {
-                console.log('Catch Error', error)
-            })
-            .finally(() => {
-                dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false })
-            })
-    }
+        .catch(error => {
+            console.log('Catch Error', error)
+        })
+        .finally(() => {
+            dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false })
+        })
 }
 
 
 export const getSingleCardThunk = (dispatch, id) => {
+
     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
     fetch(`${API_HOST}/task/${id}`)
         .then(res => res.json())
@@ -113,10 +116,11 @@ export const getSingleCardThunk = (dispatch, id) => {
         .catch(error => {
             console.log('Catch Error', error)
         })
+        .finally(() => dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false }))
 
 }
 export const deleteSingleCardThunk = (dispatch, _id) => {
-    dispatch({ type: 'SET_LOADING' })
+    dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
     fetch(`${API_HOST}/task/${_id}`, {
         method: 'DELETE'
     })
@@ -126,6 +130,7 @@ export const deleteSingleCardThunk = (dispatch, _id) => {
         })
         .catch(error => {
             console.log('singleCardError', error);
-            dispatch({ type: 'REMOVE_LOADING' })
+
         })
+        .finally(() => dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true }))
 }

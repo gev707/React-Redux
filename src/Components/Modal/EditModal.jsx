@@ -4,7 +4,7 @@ import dateFormat from '../helpers/dateFormatter'
 import DatePicker from "react-datepicker";
 import styles from "./modal.module.css";
 import { connect } from 'react-redux';
-import { editCardThunk } from "../../Redux/action";
+//import {editCardThunk} from '../../Redux/action'
 class Modal extends PureComponent {
     constructor(props) {
         super(props);
@@ -30,7 +30,7 @@ class Modal extends PureComponent {
             ...this.state,
             date: dateFormat(this.state.date)
         }
-        this.props.editCardThunk(editCard);
+        this.props.onSubmit(editCard);
     };
     setDate = (date) => {
         this.setState({
@@ -100,6 +100,6 @@ Modal.propTypes = {
     editCard: PropTypes.object,
 }
 const mapDispatchToProps = {
-    editCardThunk,
+ 
 }
 export default connect(null, mapDispatchToProps)(Modal)

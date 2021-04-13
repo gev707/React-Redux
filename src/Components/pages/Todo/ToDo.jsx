@@ -12,26 +12,16 @@ import {
     addCardThunk,
     deleteOneCardThunk,
     deleteAllCheckedCardThunk,
+    editCardThunk
 } from "../../../Redux/action";
 
 class Todo extends React.Component {
-    state = {
-        editCard: null
-    }
-    toggleEditModal = (card) => {
-        this.setState({
-            editCard: card
-        })
+
+    toggleSetCardModal = (editCard = null) => {
+        this.props.toggleSetCardModal(editCard)
     }
     componentDidMount() {
         this.props.setCard()
-    }
-    componentDidUpdate = (prevProps) => {
-        if (!prevProps.editSuccess && this.props.editSuccess) {
-            this.setState({
-                editCard: null
-            })
-        }
     }
     render() {
         const {
@@ -41,8 +31,9 @@ class Todo extends React.Component {
             isOpenConfirm,
             isCheckedCard,
             loading,
+            editableCard,
         } = this.props;
-        const { editCard } = this.state
+
         const card = cards.map(card => {
             return <Task
                 card={card}
@@ -52,12 +43,12 @@ class Todo extends React.Component {
                 isAnyCardChecked={checkedCards.size}
                 isChecked={checkedCards.has(card._id)}
                 toggleOpenModal={this.props.toggleOpenModal}
-                onEdit={this.toggleEditModal}
+                onEdit={this.toggleSetCardModal}
             />
         });
         return (
             <section className='container'>
-                <div className={editCard || isOpenModal || isOpenConfirm ? 'filter' : "noFilter"}>
+                <div className={editableCard || isOpenModal || isOpenConfirm ? 'filter' : "noFilter"}>
                     <h1>This is ToDo Component</h1>
                     <div className={styles.inputHolder}>
                         <button
@@ -99,9 +90,10 @@ class Todo extends React.Component {
                     />
                 }
                 {
-                    !!editCard && <EditModal
-                        onHide={() => this.toggleEditModal(null)}
-                        editCard={editCard}
+                    editableCard && <EditModal
+                        onHide={this.toggleSetCardModal}
+                        onSubmit={this.props.editedCard}
+                        editCard={editableCard}
                     />
                 }
                 {
@@ -120,7 +112,7 @@ class Todo extends React.Component {
     }
 }
 const mapStateToProps = state => {
-    console.log(state)
+    //console.log(state)
     const {
         cards,
         editSuccess,
@@ -128,9 +120,12 @@ const mapStateToProps = state => {
         isOpenConfirm,
         checkedCards,
         deleteCardId,
-        isCheckedCard } = state.todoState
+        editableCard,
+        isCheckedCard
+    } = state.todoState
     return {
         cards,
+        editableCard,
         editSuccess,
         isOpenModal,
         isOpenConfirm,
@@ -144,16 +139,19 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         setCard: () => dispatch(setCardsThunk),
-        addCard: (data) => dispatch((dispatch) => addCardThunk(dispatch, data)),
-        deleteCurrentCard: (_id) => dispatch((dispatch) => deleteOneCardThunk(dispatch, _id)),
+        editedCard: data => dispatch(dispatch => editCardThunk(dispatch, data)),
+        addCard: data => dispatch(dispatch => addCardThunk(dispatch, data)),
+        deleteCurrentCard: _id => dispatch(dispatch => deleteOneCardThunk(dispatch, _id)),
         deleteId: _id => dispatch({ type: 'DELETE_CARD_ID', _id }),
-        deleteCheckedCard: (checkedCards) => dispatch((dispatch) => deleteAllCheckedCardThunk(dispatch, checkedCards)),
+        deleteCheckedCard: checkedCards => dispatch(dispatch => deleteAllCheckedCardThunk(dispatch, checkedCards)),
         toggleCheckCard: _id => dispatch({ type: 'TOGGLE_CHECK_CARD', _id }),
         toggleCheckedAll: () => dispatch({ type: 'TOGGLE_CHECK_ALL_CARDS' }),
         toggleOpenModal: () => dispatch({ type: 'TOGGLE_OPEN_MODAL' }),
         toggleOpenConfirm: () => dispatch({ type: 'TOGGLE_CONFIRM_MODAL' }),
+        toggleSetCardModal: editCard => dispatch({ type: 'TOGGLE_OPEN_EDIT_MODAL', editCard }),
         closeEditModal: () => dispatch({ type: 'CLOSE_EDIT_MODAL' })
     }
 
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Todo)
