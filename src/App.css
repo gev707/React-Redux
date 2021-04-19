@@ -203,6 +203,10 @@ textarea.form-control {
   padding-right: 3rem;
   overflow: hidden;
 }
+.modal-content {
+  background:linear-gradient(#859398,#283048);
+  color:#ddd !important;
+}
 @media screen and (min-width:320px) and (max-width:768px) {
     
  h1{

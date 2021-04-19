@@ -9,33 +9,26 @@ import {
     getSingleCardThunk,
     deleteSingleCardThunk,
     editCardThunk
-} from '../../../Redux/action'
+} from '../../../Redux/requestAction'
+import {toggleOpenEditModal,reset} from '../../../Redux/simpleAction'
 import React, { PureComponent } from 'react'
 import EditModal from '../../Modal/EditModal';
 
 class SingleCardWithReducer extends PureComponent {
-
     componentDidMount = () => {
         const { id } = this.props.match.params;
-        this.props.getSingleCard(id);
+        this.props.getSingleCardThunk(id);
     }
     deleteSingleCard = () => {
         const { _id } = this.props.singleCard
-        this.props.deleteSingleCard(_id)
+        this.props.deleteSingleCardThunk(_id)
         this.props.history.push('/')
     }
-    toggleModal = () => {
-        this.props.toggleOpenModal()
-    }
-    handleEditCard = (singleCard)=> {
-        this.props.editedCard(singleCard)
+    componentWillMount =()=> {
+        this.props.reset()
     }
     render() {
-
         const { singleCard,isEditModalOpen } = this.props;
-        console.log(this.props)
-
-
         if (singleCard === {}) return <Spinner />
         else {
             return (
@@ -54,7 +47,6 @@ class SingleCardWithReducer extends PureComponent {
                             <h1>- Title - <br />{singleCard.title}</h1>
                             <h2>- Description - <br />{singleCard.description}</h2>
                             <p><small>- Date - {singleCard.date}</small></p>
-
                             <div className={styles.singleCardBtns}>
                                 <button
                                     onClick={this.deleteSingleCard}
@@ -62,7 +54,7 @@ class SingleCardWithReducer extends PureComponent {
                                     <FontAwesomeIcon icon={faTrashAlt} />
                                 </button>
                                 <button
-                                    onClick={this.props.toggleOpenModal}
+                                    onClick={this.props.toggleOpenEditModal}
                                 >
                                     <FontAwesomeIcon icon={faAddressCard} />
                                 </button>
@@ -72,8 +64,8 @@ class SingleCardWithReducer extends PureComponent {
                     </div>
                     {
                         !!isEditModalOpen && <EditModal
-                            onHide={this.props.toggleOpenModal}
-                            onSubmit={this.handleEditCard} 
+                            onHide={this.props.toggleOpenEditModal}
+                            //onSubmit={(singleCard)=>this.props.editCardThunk(singleCard,'singleCard')}
                             editCard={singleCard}  
                         />
                     }
@@ -84,18 +76,16 @@ class SingleCardWithReducer extends PureComponent {
     }
 }
 const mapStateToProps = state => {
-    console.log(state);
     return {
-        singleCard: state.singleCard,
-        isEditModalOpen: state.isEditModalOpen
+        singleCard: state.singleCardState.singleCard,
+        isEditModalOpen: state.singleCardState.isEditModalOpen
     }
 }
-const mapDispatchToProps = dispatch => {
-    return {
-        getSingleCard: (data) => dispatch((dispatch) => getSingleCardThunk(dispatch, data)),
-        deleteSingleCard: (data) => dispatch((dispatch) => deleteSingleCardThunk(dispatch, data)),
-        editedCard:(data) => dispatch((dispatch) => editCardThunk(dispatch,data)),
-        toggleOpenModal: () => dispatch({ type: 'OPEN_EDIT_MODAL'}),
-    }
+const mapDispatchToProps =  {
+    getSingleCardThunk,
+    editCardThunk,
+    deleteSingleCardThunk,
+    toggleOpenEditModal,
+    reset
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SingleCardWithReducer)

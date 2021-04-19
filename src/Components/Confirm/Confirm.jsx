@@ -26,7 +26,6 @@ const Confirm = ({onHide,deleteCard,countOrCardTitle})=>{
     )
 }
 Confirm.propTypes = {
-    onHide:PropTypes.func.isRequired,
     deleteCard:PropTypes.func.isRequired,
     countOrCardTitle:PropTypes.oneOfType([
         PropTypes.number,

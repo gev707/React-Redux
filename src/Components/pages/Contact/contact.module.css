@@ -110,6 +110,11 @@
     font-weight: bold;
     opacity: 1 !important;
 }
+.formGroupBtn:disabled {
+    color:#225a6e ;
+    opacity: 0.3 !important;
+   background: none !important;
+}
 .title{
     position: absolute;
     top:15px;

@@ -47,7 +47,6 @@ const initialState = {
             error: false,
             value: ''
         }
-
     },
     loading: false,
     errorMessage: '',
@@ -166,7 +165,6 @@ const ContactWithReducer = () => {
                 })
                 .catch(error => {
                     dispatch({type:'REMOVE_LOADING'})
-                    
                     dispatch({type:'SET_ERROR_MESSAGE',error:error.message})
                     dispatch({type:'SET_ERROR_STATUS',error:error.status})
                     dispatch({type:'OPEN_ERROR_MODAL'})

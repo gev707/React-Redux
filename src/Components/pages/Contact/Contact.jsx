@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styles from './contact.module.css'
 const linkTitle = [
     {
-        linkName: 'Contact Form With Local State ',
+        linkName: 'Contact Form With Redux ',
         to: '/contactformclass',
         name: '/ContactWithClass',
     },

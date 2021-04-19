@@ -1,27 +1,35 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import Task from '../../Tasks/Task';
 import Modal from '../../Modal/Modal';
-import EditModal from '../../Modal/EditModal'
+import EditModal from '../../Modal/EditModal';
 import Confirm from '../../Confirm/Confirm';
 import styles from "./todo.module.css";
 import Spinner from "../../Spinner/Spinner";
 import { connect } from 'react-redux';
-//thunks
+// request functions
 import {
-    setCardsThunk,
+    getCardThunk,
     addCardThunk,
     deleteOneCardThunk,
     deleteAllCheckedCardThunk,
-    editCardThunk
-} from "../../../Redux/action";
-
-class Todo extends React.Component {
-
+    editCardThunk,
+    toggleStatusThunk
+} from "../../../Redux/requestAction";
+//simple functions
+import {
+    toggleOpenModal,
+    toggleOpenConfirm,
+    toggleSetCardModal,
+    toggleCheckedAll,
+    toggleCheckCard,
+    toggleOpenEditModal
+} from "../../../Redux/simpleAction";
+class Todo extends PureComponent {
     toggleSetCardModal = (editCard = null) => {
         this.props.toggleSetCardModal(editCard)
     }
     componentDidMount() {
-        this.props.setCard()
+        this.props.getCardThunk()
     }
     render() {
         const {
@@ -33,17 +41,17 @@ class Todo extends React.Component {
             loading,
             editableCard,
         } = this.props;
-
         const card = cards.map(card => {
             return <Task
                 card={card}
                 key={card._id}
-                deleteCard={this.props.deleteCurrentCard}
+                deleteCard={(_id) => this.props.deleteOneCardThunk(_id)}
                 handleToggleCheckCards={this.props.toggleCheckCard}
                 isAnyCardChecked={checkedCards.size}
                 isChecked={checkedCards.has(card._id)}
                 toggleOpenModal={this.props.toggleOpenModal}
                 onEdit={this.toggleSetCardModal}
+                toggleStatus={(card)=>this.props.toggleStatusThunk(card)}
             />
         });
         return (
@@ -82,76 +90,66 @@ class Todo extends React.Component {
                         </div>
                     </div>
                 </div>
-
                 {
                     isOpenModal && <Modal
                         onHide={this.props.toggleOpenModal}
-                        onSubmit={this.props.addCard}
+                        onSubmit={(data) => this.props.addCardThunk(data)}
                     />
                 }
                 {
                     editableCard && <EditModal
-                        onHide={this.toggleSetCardModal}
-                        onSubmit={this.props.editedCard}
+                        onHide={this.props.toggleOpenEditModal}
+                        //onSubmit={(editCard)=>this.props.editCardThunk(editCard,'todo')}
                         editCard={editableCard}
                     />
                 }
                 {
                     isOpenConfirm && <Confirm
-                        onHide={this.props.toggleOpenConfirm}
-                        deleteCard={() => this.props.deleteCheckedCard(checkedCards)}
+                        deleteCard={() => this.props.deleteAllCheckedCardThunk(checkedCards)}
                         countOrCardTitle={isCheckedCard ? isCheckedCard.title : checkedCards.size}
                     />
                 }
                 {
                     loading && <Spinner />
                 }
-
             </section>
         )
     }
 }
 const mapStateToProps = state => {
-    //console.log(state)
     const {
         cards,
-        editSuccess,
         isOpenModal,
         isOpenConfirm,
         checkedCards,
         deleteCardId,
         editableCard,
         isCheckedCard
-    } = state.todoState
+    } = state.todoState;
     return {
         cards,
         editableCard,
-        editSuccess,
         isOpenModal,
         isOpenConfirm,
         checkedCards,
         deleteCardId,
         isCheckedCard,
-        loading: state.loading
+        loading: state.globalState.loading
     }
-
-}
-const mapDispatchToProps = dispatch => {
-    return {
-        setCard: () => dispatch(setCardsThunk),
-        editedCard: data => dispatch(dispatch => editCardThunk(dispatch, data)),
-        addCard: data => dispatch(dispatch => addCardThunk(dispatch, data)),
-        deleteCurrentCard: _id => dispatch(dispatch => deleteOneCardThunk(dispatch, _id)),
-        deleteId: _id => dispatch({ type: 'DELETE_CARD_ID', _id }),
-        deleteCheckedCard: checkedCards => dispatch(dispatch => deleteAllCheckedCardThunk(dispatch, checkedCards)),
-        toggleCheckCard: _id => dispatch({ type: 'TOGGLE_CHECK_CARD', _id }),
-        toggleCheckedAll: () => dispatch({ type: 'TOGGLE_CHECK_ALL_CARDS' }),
-        toggleOpenModal: () => dispatch({ type: 'TOGGLE_OPEN_MODAL' }),
-        toggleOpenConfirm: () => dispatch({ type: 'TOGGLE_CONFIRM_MODAL' }),
-        toggleSetCardModal: editCard => dispatch({ type: 'TOGGLE_OPEN_EDIT_MODAL', editCard }),
-        closeEditModal: () => dispatch({ type: 'CLOSE_EDIT_MODAL' })
-    }
-
-}
+};
+const mapDispatchToProps = {
+    getCardThunk,
+    addCardThunk,
+    deleteOneCardThunk,
+    deleteAllCheckedCardThunk,
+    editCardThunk,
+    toggleOpenModal,
+    toggleOpenConfirm,
+    toggleSetCardModal,
+    toggleCheckedAll,
+    toggleCheckCard,
+    toggleOpenEditModal,
+    toggleStatusThunk
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todo)

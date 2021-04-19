@@ -1,4 +1,4 @@
-import {Button,Dropdown} from 'react-bootstrap'
+
 import todoImage from '../../../assets/Images/Screenshot_3.png';
 import todoImage1 from '../../../assets/Images/Screenshot_1.png';
 import todoImage2 from '../../../assets/Images/Screenshot_2.png';
@@ -51,46 +51,6 @@ const About = (props) => {
                 className={styles.aboutHolder}
             >
                 <h1>About Section</h1>
-                <div className={`${styles.dropDown} d-flex justify-content-flex-start`}>
-                    <Dropdown>  
-                        <Dropdown.Toggle variant="info" id="dropdown-basic">
-                            Page Routing
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">
-                                <Button 
-                                    variant='info' 
-                                    onClick = {()=>props.history.push('/')}
-                                    >To Home
-                                </Button>
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">
-                                <Button 
-
-                                    variant='info' 
-                                    onClick = {()=>props.history.go(-1)}
-                                    >Previus Page
-
-                                </Button>
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">
-                                <Button 
-                                    variant='info' 
-                                    onClick = {()=>props.history.goBack()}
-                                    >Go Back
-                                </Button>
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#/action-4">
-                                <Button 
-                                    variant='info' 
-                                    onClick = {()=>props.history.goForward()}
-                                    >Go Forward
-                                </Button>
-                            </Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>  
-                </div>
                 {section}
             </div>
 

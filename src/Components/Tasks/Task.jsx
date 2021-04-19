@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from "./task.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faAddressCard } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faAddressCard, faCheckCircle, faHourglassHalf } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom'
-import { withRouter } from 'react-router-dom';
-
+// import { withRouter } from 'react-router-dom';
 import { memo } from 'react';
 const Task = ({
     card,
@@ -13,7 +12,7 @@ const Task = ({
     deleteCard,
     isChecked,
     onEdit,
-
+    toggleStatus
 }) => {
     return (
         <div className={!isChecked ? styles.taskHolder : styles.tasks}>
@@ -26,7 +25,7 @@ const Task = ({
             <div className={styles.taskFlex}>
                 <NavLink to={'/card/' + card._id}><p className={styles.para}>{card.title}</p></NavLink>
                 <p className={styles.description}>- Description - <br />{card.description}</p>
-                <p>Date: {card.date.slice(0, 10)}</p>
+                {/* <p>Date: {card.date.slice(0,10)}</p> */}
                 <div>
                     <button className={styles.taskBtn}>
                         <FontAwesomeIcon
@@ -38,6 +37,12 @@ const Task = ({
                         <FontAwesomeIcon
                             icon={faAddressCard}
                             onClick={() => onEdit(card)}
+                        />
+                    </button>
+                    <button className={styles.taskBtn}>
+                        <FontAwesomeIcon
+                            icon={card.status === 'active' ? faHourglassHalf : faCheckCircle}
+                            onClick={() => toggleStatus(card)}
                         />
                     </button>
                 </div>
@@ -58,4 +63,5 @@ Task.propTypes = {
     isChecked: PropTypes.bool
 
 }
-export default withRouter(memo(Task));
+
+export default memo(Task);

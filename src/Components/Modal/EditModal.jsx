@@ -3,52 +3,38 @@ import React, { PureComponent } from "react";
 import dateFormat from '../helpers/dateFormatter'
 import DatePicker from "react-datepicker";
 import styles from "./modal.module.css";
-import { connect } from 'react-redux';
-//import {editCardThunk} from '../../Redux/action'
-class Modal extends PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-            description: '',
-            ...props.editCard,
-            date: props.editCard ? new Date(props.editCard.date) : new Date(),
-        }
-    };
-
-    handleChangeInputValue = (event) => {
-        const { name, value } = event.target;
-        this.setState({
-            [name]: value
-        })
-    };
+import { connect } from 'react-redux'
+import { changeValues, setDate, getEditValue, reset } from '../../Redux/simpleAction';
+import { editCardThunk } from '../../Redux/requestAction'
+class EditModal extends PureComponent {
 
     handleSubmit = ({ key, type }) => {
-        const { title, description, } = this.state;
+        const { editCardFromState } = this.props;
+        const { title, description, date } = editCardFromState
         if (!title || !description || (type === 'keypress' && key !== 'Enter')) return;
         const editCard = {
-            ...this.state,
-            date: dateFormat(this.state.date)
+            ...editCardFromState,
+            date: dateFormat(date)
         }
-        this.props.onSubmit(editCard);
-    };
-    setDate = (date) => {
-        this.setState({
-            date
-        })
+        this.props.editCardThunk(editCard, 'todo');
+        this.props.reset()
     }
-
+    componentDidMount = () => {
+        const { editCard } = this.props;
+        this.props.getEditValue(editCard)
+        console.log(editCard)
+    }
     render() {
-        const { title, description, date } = this.state
-        const { onHide } = this.props
+        const { onHide } = this.props;
+        const { title, description, date } = this.props.editCardFromState
         return (
             <div
                 className={styles.modalHolder}
             >
                 <div className={styles.closeModal}>
-                    <span onClick={onHide}></span>
+                    <span onClick={event => onHide()}></span>
                 </div>
-                <h2>Edit Card</h2>
+                <h2>{"Edit Card"}</h2>
                 <div className='p-2'>
                     <div className={styles.inputHolder}>
                         <input
@@ -56,17 +42,16 @@ class Modal extends PureComponent {
                             className={styles.inputItem}
                             type="text"
                             placeholder='Add some Card'
-                            onChange={this.handleChangeInputValue}
+                            onChange={(e) => this.props.changeValues(e.target)}
                             onKeyPress={this.handleSubmit}
                             value={title}
-                            ref={this.inputRef}
                         />
                     </div>
                     <div>
                         <textarea
                             name='description'
                             className={styles.textarea}
-                            onChange={this.handleChangeInputValue}
+                            onChange={(e) => this.props.changeValues(e.target)}
                             placeholder='Card Description. . . '
                             style={{ resize: 'none' }}
                             value={description}
@@ -76,30 +61,36 @@ class Modal extends PureComponent {
                     <div className="d-flex mt-3">
                         <DatePicker
                             selected={date}
-                            onChange={date => this.setDate(date)}
+                            onChange={date => this.props.setDate(date)}
                             className='datapicker'
                         />
                     </div>
                 </div>
                 <div className={styles.btnSave}>
                     <button
-                        onClick={onHide}
+                        onClick={(e) => onHide()}
                     >Close Card
                         </button>
                     <button
                         onClick={this.handleSubmit}
-                    >Edit Card
-                        </button>
+                    >{'Save Card'}
+                    </button>
                 </div>
             </div>
         )
     }
-
 }
-Modal.propTypes = {
+EditModal.propTypes = {
     editCard: PropTypes.object,
 }
+const mapStateToProps = state => ({
+    editCardFromState: { ...state.editModalState }
+})
 const mapDispatchToProps = {
- 
+    changeValues,
+    editCardThunk,
+    setDate,
+    getEditValue,
+    reset
 }
-export default connect(null, mapDispatchToProps)(Modal)
+export default connect(mapStateToProps, mapDispatchToProps)(EditModal)
