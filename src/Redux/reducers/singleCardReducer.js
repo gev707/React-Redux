@@ -1,24 +1,23 @@
 import types from '../action.Types'
 const initialState = {
     singleCard: {},
-    isEditModalOpen:false,
+    isEditModalOpen: false,
 }
-const singleCardReducer = (state=initialState,action) => {
+const singleCardReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.GET_SINGLE_CARD: {
             return {
                 ...state,
                 singleCard: action.data,
-                isEditModalOpen:false
             }
         }
         case types.DELETE_SINGLE_CARD: {
             return {
-                ...state,  
+                ...state,
                 card: null
             }
         }
-        case types.TOGGLE_OPEN_EDIT_MODAL: {
+        case types.TOGGLE_OPEN_SINGLE_CARD_MODAL: {
             return {
                 ...state,
                 isEditModalOpen: !state.isEditModalOpen

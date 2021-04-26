@@ -1,4 +1,4 @@
-import types from '../action.Types'
+import types from '../action.Types';
 
 const initialState = {
     cards: [],
@@ -8,8 +8,8 @@ const initialState = {
     checkedCards: new Set(),
     deleteCardId: null,
     isCheckedCard: null,
-    isEditModalOpen: false,
 }
+
 const todoReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.SET_CARDS: {
@@ -92,21 +92,22 @@ const todoReducer = (state = initialState, action) => {
         }
         case types.EDIT_CARD: {
             const cards = [...state.cards];
-            const index = cards.findIndex(card => card._id === action.data_id)
+            const index = cards.findIndex(card => card._id === action.data._id)
             cards[index] = action.data;
             return {
                 ...state,
-                editableCard:null,
-                isEditModalOpen: !state.isEditModalOpen
+                cards,
+                editableCard: null,
             }
         }
         case types.TOGGLE_OPEN_EDIT_MODAL: {
             return {
                 ...state,
-                editableCard: action.editCard,
+                editableCard: action.editableCard,
             }
         }
         default: return state
     }
-}
+};
+
 export default todoReducer

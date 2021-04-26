@@ -5,7 +5,7 @@
     transform: translate(-50%, -50%);
     width:600px;
     height:500px;
-    background: linear-gradient(#283048,#4e506efa,#283048);
+    background: linear-gradient(#555f7d,#4e506efa,#5f6988);
     box-shadow: 0px 0px 20px rgb(0 0 0 /50%);
     border-radius: 5px;
     transition:all 0.3s ease;

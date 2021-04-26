@@ -1,8 +1,6 @@
 //import request from '../Components/helpers/requests'
 import types from './action.Types'
-
 // Action Creators for Request
-
 const API_HOST = 'http://localhost:3001';
 
 // export const getCardThunk = () => (dispatch) => {
@@ -12,18 +10,17 @@ const API_HOST = 'http://localhost:3001';
 //         .catch(error => dispatch({ type: types.ERROR, error: error.message }))
 //         .finally(() => dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false }))
 // }
-// export const addCardThunk = (formData) => (dispatch) => {
-//     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
-//     request(`${API_HOST}/task`,"POST",formData)
-//         .then(data => dispatch({ type: types.ADD_CARD, data }))
-//         .catch(error => dispatch({ type: types.ERROR, error: error.message }))
-//         .finally(() => dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false }))
 
-// // }
-export const getCardThunk = () => (dispatch) => {
-
+export const getCardThunk = (data = {}) => (dispatch) => {
+    const searchData = { ...data }
+    let url = 'http://localhost:3001/task';
+    let query = '?';
+    for (let key in searchData) {
+        let value = searchData[key];
+        query = `${query}${key}=${value}&`
+    }
     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
-    fetch(`${API_HOST}/task`)
+    fetch(url + query)
         .then(res => res.json())
         .then(data => {
             if (data.error) throw data.error
@@ -33,14 +30,13 @@ export const getCardThunk = () => (dispatch) => {
             dispatch({ type: types.ERROR, error: error.message })
         })
         .finally(() => dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false }))
-
 };
 
-export const addCardThunk = (editCard) => (dispatch) => {
+export const addCardThunk = (formData) => (dispatch) => {
     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
     fetch(`${API_HOST}/task`, {
         method: 'POST',
-        body: JSON.stringify(editCard),
+        body: JSON.stringify(formData),
         headers: {
             'Content-type': 'application/json'
         }
@@ -93,11 +89,11 @@ export const deleteAllCheckedCardThunk = (checkedCards) => dispatch => {
         .finally(() => dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false }))
 
 }
-export const editCardThunk = (editCard, page) => (dispatch) => {
+export const editCardThunk = (editedCard, page = 'todo') => (dispatch) => {
     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
-    fetch(`${API_HOST}/task/${editCard._id}`, {
+    fetch(`${API_HOST}/task/${editedCard._id}`, {
         method: 'PUT',
-        body: JSON.stringify(editCard),
+        body: JSON.stringify(editedCard),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -105,13 +101,13 @@ export const editCardThunk = (editCard, page) => (dispatch) => {
         .then(res => res.json())
         .then(data => {
             if (data.error) throw data.error;
-            
+
             if (page === 'todo') {
-                dispatch({ type: types.EDIT_CARD, data})
+                dispatch({ type: types.EDIT_CARD, data, page })
                 dispatch({ type: types.SUCCESS, success: 'Edit Card SuccessFull' })
             }
-            else{
-                dispatch({ type: types.GET_SINGLE_CARD, data })
+            else {
+                dispatch({ type: types.EDIT_CARD, data })
                 dispatch({ type: types.SUCCESS, success: 'Edit Single Card SuccessFull' })
             }
         })
@@ -128,7 +124,7 @@ export const getSingleCardThunk = id => dispatch => {
         .then(res => res.json())
         .then(data => {
             if (data.error) throw data.error
-            dispatch({ type: types.GET_SINGLE_CARD, data })
+            dispatch({ type: types.GET_SINGLE_CARD, data: data })
         })
         .catch(error => {
             dispatch({ type: types.ERROR, error: error.message })
@@ -183,12 +179,11 @@ export const getValues = (formData) => (dispatch) => {
             dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false })
         })
 }
-
-export const toggleStatusThunk = (card) => (dispatch) => {
-    const status = card.status === 'active' ? 'done' : 'active';
+export const cardToggleStatus = (card) => (dispatch) => {
+    const status = card.status === 'active' ? 'done' : 'active'
     fetch(`${API_HOST}/task/${card._id}`, {
         method: 'PUT',
-        body: JSON.stringify(status),
+        body: JSON.stringify({ status }),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -202,3 +197,4 @@ export const toggleStatusThunk = (card) => (dispatch) => {
             dispatch({ type: types.ERROR, error: error.message })
         })
 }
+

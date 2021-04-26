@@ -1,22 +1,67 @@
 
 .aboutHolder{
-    background:linear-gradient(rgba(0, 0, 0, 0.856),rgba(27, 27, 29, 0.74));
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+    background: #fff;
+    color:#222;
+    height:100vh;
+    overflow:hidden;
 }
 .aboutTitle {
-    color: #fff;
-    width:60%;
-    margin: 3rem auto;
+    color:#222;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: 700;
 }
+.aboutWrapper {
+    display: grid;
+    grid-template-areas: 
+        'aboutSideBar'
+        'aboutTitle aboutContent'
+    ;
+    grid-template-columns:1fr 250px;
+    grid-template-rows:70px 1fr;
+}
+.aboutSidebar {
+    background: #ddd;
+    height:100%;
+}
+.aboutContent {
+    height:100%
+}
+.userImage{
+    width: 195px;
+    height:195px;
+    margin: 1rem auto;
+}
+.address {
+    margin-bottom: 3px;
+    margin-left: 1rem;
+    font-size: 13px;
+    font-style: italic;
+}
+.contactsUser {
+    width:100%;
+    padding: 0rem 2rem;
+}
+.contactUser { 
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+.contactUser svg { 
+    color:rgb(47, 161, 95)
+}
+.userInfo{
+    font-size: 14px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.hr{
+    margin-top: 0;
+}
+
 figure{
-    width:60%;
+    width:65%;
     margin:0 auto !important;
-    border-bottom:2px solid #fff ;
-    border-radius: 15px ;
+    border-bottom:2px solid #222 ;
+    border-radius: 5px ;
     overflow: hidden;
     transition: 0.7s ease;
 }
@@ -28,36 +73,32 @@ figure img {
     width:100%;
 }
 figure figcaption {
-    color:#ddd;
-    padding: 10px;
+    color:#222;
+    padding: 12px;
     font-size: 20px;
+    font-weight: 700;
+}
+.aboutText{
+    width:70%;
+    margin: 0 auto 2rem;
+    font-size: 14px;
+    color:#222;
+    font-weight: 400;
+    font-family:'Times New Roman', Times, serif;
 }
 
-.dropDown {
-    position: fixed;
-    top:18px;
-}
 @media screen and (min-width:320px) and (max-width:768px) {
-    .aboutHolder{
-     
-       padding-top:2.5rem;
+    .aboutWrapper {
+        display: grid;
+        grid-template-areas: 
+            'aboutSidebar'
+            'aboutContent'
+        ;
+        grid-template-columns:1fr;
+        grid-template-rows:1fr;
     }
-    .aboutHolder div:last-child{
-        padding-bottom: 4rem;
-     }
-    figure{
-        width:100%;
-        margin:1rem;
+    .aboutHolder {
+        height: auto;
+        overflow-y: scroll;
     }
-    figure img {
-        width:100%;
-        height:100%;
-    }
-    .aboutTitle {
-        color: #fff;
-        width:100%;
-        margin: 2rem 0;
-        text-align: justify;
-    }
-
 }

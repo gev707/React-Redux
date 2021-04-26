@@ -1,13 +1,10 @@
 import types from './action.Types'
-
+//todo state actions
 export const toggleOpenModal = ()=> (dispatch)=>{
     dispatch({ type: types.TOGGLE_OPEN_MODAL })
 }
 export const toggleOpenConfirm = ()=> (dispatch)=>{
     dispatch({ type:types.TOGGLE_CONFIRM_MODAL })
-}
-export const toggleSetCardModal = (editCard)=> (dispatch)=>{
-    dispatch({ type: types.TOGGLE_OPEN_EDIT_MODAL, editCard})
 }
 export const toggleCheckedAll = ()=> (dispatch)=>{
     dispatch({ type: types.TOGGLE_CHECK_ALL_CARDS })
@@ -15,9 +12,7 @@ export const toggleCheckedAll = ()=> (dispatch)=>{
 export const toggleCheckCard = (_id)=> (dispatch)=>{
     dispatch({ type: types.TOGGLE_CHECK_CARD, _id })
 }
-export const toggleOpenEditModal = ()=> (dispatch)=>{
-    dispatch({ type:types.TOGGLE_OPEN_EDIT_MODAL})
-}
+
 export const reset =()=>(dispatch)=> {
     dispatch({type:types.RESET})
 }
@@ -33,6 +28,29 @@ export const closeAndReset =()=>(dispatch)=> {
 export const setDate =(date)=>(dispatch)=> {
     dispatch({type:types.SET_DATE,date})
 }
-export const getEditValue = (editCardFromState)=>(dispatch)=>{
-    dispatch({type:'GET_EDIT_CARD',editCardFromState})
+//edit card actions
+export const getEditCard = (editableCard)=>(dispatch)=>{
+    dispatch({type:types.GET_EDIT_CARD,editableCard})
+}
+export const toggleSetCard = (editableCard)=> (dispatch)=>{
+    dispatch({ type: types.TOGGLE_OPEN_EDIT_MODAL, editableCard})
+}
+export const changeEditCardValue =(target)=>(dispatch)=> {
+    dispatch({type:types.CHANGE_EDIT_CARD_VALUES,target})
+}
+export const setEditDate =(date)=>(dispatch)=> {
+    dispatch({type:types.SET_EDIT_CARD_DATE,date})
+}
+export const toggleOpenEditModal = ()=> (dispatch)=>{
+    dispatch({ type:types.TOGGLE_OPEN_SINGLE_CARD_MODAL})
+}
+//searching actions
+export const setFilterValue = (name,value) => dispatch=> {
+    dispatch({type:types.SET_DROPDOWN_FILTER,name,value})
+}
+export const changeSearchValue = target => dispatch => {
+    dispatch({type:types.CHANGE_SEARCH_VALUE,target})
+}
+export const setSearchDate =(name,date) => dispatch=> {
+    dispatch({type:types.SET_SEARCH_DATE,name,date})
 }

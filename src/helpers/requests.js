@@ -1,4 +1,4 @@
-async function request (url, method='GET', body) {
+async function request (url, method='GET',body) {
     const config = {
         method: method,
         headers: {

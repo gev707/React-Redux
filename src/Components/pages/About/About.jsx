@@ -1,59 +1,91 @@
 
-import todoImage from '../../../assets/Images/Screenshot_3.png';
-import todoImage1 from '../../../assets/Images/Screenshot_1.png';
-import todoImage2 from '../../../assets/Images/Screenshot_2.png';
+import userImage from '../../../assets/Images/1619201806928.jpg';
+import aboutImage from '../../../assets/Images/form.png';
 import styles from './about.module.css'
-const About = (props) => {
+import { Card, Image } from 'react-bootstrap';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faEnvelope,
+    faPhone,
+    faCalendarAlt,
+    faMapMarkerAlt,
+
+} from '@fortawesome/free-solid-svg-icons';
+import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
+const About = () => {
     const sections = [
         {
-            text:`I know it is an overdone project, however, 
+            text:`This is my first React project, however, 
             building a todo application can be a great way to learn
             React and solidify some of the basic principles of the library.
             So today, we will be building a simple React app.`,
-            image: todoImage,
-            figcaption: 'We make todo list !',
+            image: aboutImage,
+            figcaption: 'My Todo List !',
             alt:'myTodoList'
-        },
-        {
-            text:`For our styling, we will be using an external CSS.
-            With the settings menu still open, flip over to the CSS tab, 
-            scroll down to the external scripts section.`,
-            image: todoImage1,
-            figcaption: 'Css style for our project !',
-            alt:'myTodoList1'
-        },
-        {
-            text:`It’s always a good idea to have a plan of what you are going to build before
-            you start typing. Especially when building a user interface with React. We want to have some idea of what 
-            the interface will look like so we can know what 
-        components we need to build and what data each component will be responsible for handling`,
-            image: todoImage2,
-            figcaption: 'Nice modal for our todo !',
-            alt:'myTodoList2'
-        },
+        }
+        
     ];
     const section=sections.map((section,index)=>{
-    
         return (
             <div key={index}>
-                <h2 className={styles.aboutTitle}>{section.text}</h2>
+                <h4 className={styles.aboutText}>{section.text}</h4>
                 <figure>
                     <img src={section.image} alt={section.alt}/>
                     <figcaption>{section.figcaption}</figcaption>
                 </figure>
             </div>
         )
-
     });
-        return (
-
-            <div 
-                className={styles.aboutHolder}
-            >
-                <h1>About Section</h1>
-                {section}
+    return (
+        <div className={styles.aboutHolder}>
+            <div className={styles.aboutWrapper}>
+            <h1 className={styles.aboutTitle}>Hi Dear Reader!</h1>
+                <div className={styles.aboutSidebar}>
+                    <Card >
+                        <Image className={styles.userImage} roundedCircle src={userImage} />
+                        <Card.Body>
+                            <Card.Title>Gevorg Margaryan</Card.Title>
+                            <Card.Text className={styles.userInfo}>
+                                I have successfully completed an React/Redux educational programm
+                                in Bitschool Business Development Group.
+                        </Card.Text>
+                        </Card.Body>
+                        <div className={styles.contactsUser}>
+                            <div className={styles.contactUser}>
+                                <FontAwesomeIcon icon={faEnvelope} />
+                                <address className={styles.address}>gev.mar92@gmail.com</address>
+                            </div>
+                            <div className={styles.contactUser}>
+                                <FontAwesomeIcon icon={faPhone} />
+                                <address className={styles.address}>+374-93-60-70-16</address>
+                            </div>
+                            <div className={styles.contactUser}>
+                                <FontAwesomeIcon icon={faCalendarAlt} />
+                                <address className={styles.address}>05/10/1992</address>
+                            </div>
+                            <div className={styles.contactUser}>
+                                <FontAwesomeIcon icon={faMapMarkerAlt} />
+                                <address className={styles.address}>c.Vagharshapat</address>
+                            </div>
+                        </div>
+                        <Card.Body>
+                            <hr className={styles.hr} />
+                            <Card.Link href="https://www.linkedin.com/in/gev-margaryan-b5a571188/">
+                                <FontAwesomeIcon icon={faLinkedin} />
+                            </Card.Link>
+                            <Card.Link href="https://github.com/gev707">
+                                <FontAwesomeIcon icon={faGithub} />
+                            </Card.Link>
+                        </Card.Body>
+                    </Card>
+                </div>
+                <div className={styles.aboutContent}>
+                    <h2>My First Project</h2>
+                   {section}
+                </div>
             </div>
-
-        )
+        </div>
+    )
 }
 export default About;

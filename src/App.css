@@ -69,6 +69,9 @@ h1{
   margin-right: auto;
   margin-left: auto;
 }
+.card {
+  border: none !important;
+}
 .row {
   width:100%;
 }
@@ -207,27 +210,155 @@ textarea.form-control {
   background:linear-gradient(#859398,#283048);
   color:#ddd !important;
 }
+.dropdown-menu.show{
+  background: #ddd !important;
+  position: absolute !important;
+  transform: translate(0px,25px) !important;
+  box-shadow: 0px 0px 5px rgba(255 255 255 / 20%);
+  width: auto;
+}
+.dropdown-item {
+  background: none !important;
+  color:#266c75 !important;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  line-height: 22px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: 0.5s ease;
+  padding: 0 5px !important;
+  
+}
+.dropdown-item:hover {
+  background: #266c75 !important;
+  color:#ddd !important;
+  transition: 0.5s ease;
+}
+.navbar-light {
+  background: #fff !important;
+  box-shadow: 0px 0px 5px rgba(255 255 255 / 20%);
+  border-radius:15px;
+}
+.navbar-brand {
+  color:#266c75 !important;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
+.btn {
+  background: none !important;
+  color:#266c75 !important;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  outline: none !important;
+  border:none !important;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0 0 0 / 20%);
+  font-size: 17px;
+}
+.form-control {
+  background: transparent !important;
+  box-shadow: 0px 0px 5px rgba(0 0 0 / 20%);
+  border: none;
+}
+label {
+  margin-bottom: 0 !important;
+  color:#222;
+  font-size: 16px
+}
+.datapicker{
+  margin-bottom: 0 !important;
+}
+
 @media screen and (min-width:320px) and (max-width:768px) {
     
  h1{
    margin-top: 3rem !important;
  }
 }
-
 .modal-title {
   margin-bottom: 0;
   line-height: 1.5;
 
   margin:0 auto;
 }
+@media screen and (min-width:320px) and (max-width:767px) {
+  h1 {
+    font-size: 18px;
+  } 
+  .navbar-brand {
+    margin: 1rem 0;
+    font-size: 1.25rem;
+    white-space: nowrap;
+  }
+  .form-inline {
+    display: flex;
+    flex-flow: nowrap;
+    align-items: center;
+    order:2;
+  }
+  .navbar-nav {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    list-style: none;
+    order: 1;
+    margin: 1rem auto;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  label {
+    margin-bottom: 0 !important;
+    color:#266c75;
+    font-size: 14px
+  }
+  .react-datepicker-wrapper {
+    margin: 1rem auto 0;
+  }
+  .dropdown-menu {
+    min-width: 7rem;
+  }
+  .datapicker {
+    background: transparent;
+    border: 1px solid #266c75 !important;
+    outline: none;
+    border-radius: 10px;
+    color: #266c75;
+    padding: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+.openNav {
+  position: fixed;
+  right: 20px;
+  top: 15px;
+  width: 50px;
+  height: 50px;
+  display: block;
+  z-index: 11111;
+  cursor: pointer;
+}
+}
+@media screen and (min-width: 768px){
 
+  .navbar-expand-md .navbar-collapse {
+    display: flex!important;
+    flex-basis: auto;
+    justify-content: space-between;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .dropdown-menu {
+    min-width: 7rem;
+  }
 
-
-
-
-
-
-
+}
 @media screen and (min-width: 1200px){
   .container {
     max-width: 1170px;
@@ -255,8 +386,6 @@ textarea.form-control {
     
   }
 }
-
-
 @media screen and (max-width: 767px){
   .container {
     max-width: 720px;

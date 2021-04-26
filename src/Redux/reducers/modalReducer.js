@@ -21,6 +21,14 @@ const modalReducer = (state=initialState,action)=> {
                 date:action.date
             }
         }
+        case types.GET_EDIT_CARD: {
+            const {editableCard}= action;
+            return {
+                ...state,
+                ...editableCard,
+                date:editableCard? new Date(editableCard.date) :new Date()
+            }
+        }
         case types.RESET : {
             return{
                 ...initialState

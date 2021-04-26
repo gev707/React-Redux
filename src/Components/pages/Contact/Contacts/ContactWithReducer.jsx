@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useReducer } from 'react';
 import Spinner from '../../../Spinner/Spinner';
 import ContactFormModal from './ContactFormModal';
-import { isRequired, maxLength, minLength, validateEmail } from '../../../helpers/validators';
+import { isRequired, maxLength, minLength, validateEmail } from '../../../../helpers/validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle, faCheckCircle, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import ErrorModal from '../../../Modal/ErrorModal';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { contextForContact } from '../context';
-import { isRequired, maxLength, minLength, validateEmail } from '../../Components/helpers/validators';
+import { isRequired, maxLength, minLength, validateEmail } from '../../helpers/validators';
 const API_HOST = 'http://localhost:3001';
 const maxLength30 = maxLength(30);
 const minLength3 = minLength(3);

@@ -10,70 +10,86 @@ import {
     deleteSingleCardThunk,
     editCardThunk
 } from '../../../Redux/requestAction'
-import {toggleOpenEditModal,reset} from '../../../Redux/simpleAction'
-import React, { PureComponent } from 'react'
-import EditModal from '../../Modal/EditModal';
+import {
+    toggleOpenEditModal,
+    reset
+} from '../../../Redux/simpleAction'
+import React, { useEffect } from 'react'
+import Modal from '../../Modal/Modal';
 
-class SingleCardWithReducer extends PureComponent {
-    componentDidMount = () => {
-        const { id } = this.props.match.params;
-        this.props.getSingleCardThunk(id);
-    }
-    deleteSingleCard = () => {
-        const { _id } = this.props.singleCard
-        this.props.deleteSingleCardThunk(_id)
-        this.props.history.push('/')
-    }
-    componentWillMount =()=> {
-        this.props.reset()
-    }
-    render() {
-        const { singleCard,isEditModalOpen } = this.props;
-        if (singleCard === {}) return <Spinner />
-        else {
-            return (
+const SingleCard = (props) => {
+    const {
+        singleCard,
+        isEditModalOpen,
 
-                <>
-                    <div className={styles.singleCardHolder}>
-                        <div className={styles.goBackPage}>
-                            <Button
-                                variant='dark'
-                                style={{ color: '#ddd' }}
-                                onClick={() => this.props.history.goBack()}
-                            >Go Back
+        //functions
+        getSingleCardThunk,
+        deleteSingleCardThunk,
+        toggleOpenEditModal,
+        editCardThunk,
+        reset
+    } = props
+    useEffect(() => {
+        const { id } = props.match.params;
+        getSingleCardThunk(id)
+        return ()=> {
+            reset();
+        }
+    }, [props.match.params, getSingleCardThunk,reset])
+
+    const deleteSingleCard = () => {
+        const { _id } = singleCard
+        deleteSingleCardThunk(_id)
+        props.history.push('/')
+    }
+
+
+
+    if (singleCard === {}) return <Spinner />
+    else {
+        return (
+
+            <>
+                <div className={styles.singleCardHolder}>
+                    <div className={styles.goBackPage}>
+                        <Button
+                            variant='dark'
+                            style={{ color: '#ddd' }}
+                            onClick={() => props.history.goBack()}
+                        >Go Back
                     </Button>
-                        </div>
-                        <div className={styles.singleCardReducerBody}>
-                            <h1>- Title - <br />{singleCard.title}</h1>
-                            <h2>- Description - <br />{singleCard.description}</h2>
-                            <p><small>- Date - {singleCard.date}</small></p>
-                            <div className={styles.singleCardBtns}>
-                                <button
-                                    onClick={this.deleteSingleCard}
-                                >
-                                    <FontAwesomeIcon icon={faTrashAlt} />
-                                </button>
-                                <button
-                                    onClick={this.props.toggleOpenEditModal}
-                                >
-                                    <FontAwesomeIcon icon={faAddressCard} />
-                                </button>
+                    </div>
+                    <div className={styles.singleCardReducerBody}>
+                        <h1>- Title - <br />{singleCard.title}</h1>
+                        <h2>- Description - <br />{singleCard.description}</h2>
+                        <p><small>- Date - {singleCard.date}</small></p>
+                        <div className={styles.singleCardBtns}>
+                            <button
+                                onClick={deleteSingleCard}
+                            >
+                                <FontAwesomeIcon icon={faTrashAlt} />
+                            </button>
+                            <button
+                                onClick={toggleOpenEditModal}
+                            >
+                                <FontAwesomeIcon icon={faAddressCard} />
+                            </button>
 
-                            </div>
                         </div>
                     </div>
-                    {
-                        !!isEditModalOpen && <EditModal
-                            onHide={this.props.toggleOpenEditModal}
-                            //onSubmit={(singleCard)=>this.props.editCardThunk(singleCard,'singleCard')}
-                            editCard={singleCard}  
-                        />
-                    }
-                </>
-            )
-        }
-
+                </div>
+                {
+                    isEditModalOpen && <Modal
+                        onHide={toggleOpenEditModal}
+                        onSubmit={(singleCard) => editCardThunk(singleCard, 'singleCard')}
+                        editableCard={singleCard}
+                    />
+                }
+            </>
+        )
     }
+
+
 }
 const mapStateToProps = state => {
     return {
@@ -81,11 +97,11 @@ const mapStateToProps = state => {
         isEditModalOpen: state.singleCardState.isEditModalOpen
     }
 }
-const mapDispatchToProps =  {
+const mapDispatchToProps = {
     getSingleCardThunk,
     editCardThunk,
     deleteSingleCardThunk,
     toggleOpenEditModal,
     reset
 }
-export default connect(mapStateToProps, mapDispatchToProps)(SingleCardWithReducer)
+export default connect(mapStateToProps, mapDispatchToProps)(SingleCard)

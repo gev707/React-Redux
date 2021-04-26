@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
-import Task from '../../Tasks/Task';
+import Task from '../../Cards/Card';
+import Search from '../../Search/Search'
 import Modal from '../../Modal/Modal';
-import EditModal from '../../Modal/EditModal';
+//import EditModal from '../../Modal/EditModal';
 import Confirm from '../../Confirm/Confirm';
 import styles from "./todo.module.css";
 import Spinner from "../../Spinner/Spinner";
@@ -13,24 +14,27 @@ import {
     deleteOneCardThunk,
     deleteAllCheckedCardThunk,
     editCardThunk,
-    toggleStatusThunk
+    cardToggleStatus
 } from "../../../Redux/requestAction";
 //simple functions
 import {
     toggleOpenModal,
     toggleOpenConfirm,
-    toggleSetCardModal,
+    toggleSetCard,
     toggleCheckedAll,
     toggleCheckCard,
-    toggleOpenEditModal
 } from "../../../Redux/simpleAction";
+
 class Todo extends PureComponent {
-    toggleSetCardModal = (editCard = null) => {
-        this.props.toggleSetCardModal(editCard)
+
+    toggleSetCardModal = (editableCard = null) => {
+        this.props.toggleSetCard(editableCard)
     }
-    componentDidMount() {
+
+    componentDidMount=() =>{
         this.props.getCardThunk()
     }
+    
     render() {
         const {
             cards,
@@ -40,6 +44,7 @@ class Todo extends PureComponent {
             isCheckedCard,
             loading,
             editableCard,
+            cardToggleStatus
         } = this.props;
         const card = cards.map(card => {
             return <Task
@@ -51,13 +56,14 @@ class Todo extends PureComponent {
                 isChecked={checkedCards.has(card._id)}
                 toggleOpenModal={this.props.toggleOpenModal}
                 onEdit={this.toggleSetCardModal}
-                toggleStatus={(card)=>this.props.toggleStatusThunk(card)}
+                toggleStatus={(card)=>cardToggleStatus(card)}
             />
         });
         return (
             <section className='container'>
                 <div className={editableCard || isOpenModal || isOpenConfirm ? 'filter' : "noFilter"}>
-                    <h1>This is ToDo Component</h1>
+                    <h1>This is ToDo List</h1>
+                    <Search />
                     <div className={styles.inputHolder}>
                         <button
                             className={styles.btnAddText}
@@ -97,16 +103,17 @@ class Todo extends PureComponent {
                     />
                 }
                 {
-                    editableCard && <EditModal
-                        onHide={this.props.toggleOpenEditModal}
-                        //onSubmit={(editCard)=>this.props.editCardThunk(editCard,'todo')}
-                        editCard={editableCard}
+                    editableCard && <Modal
+                        onHide={this.toggleSetCardModal}
+                        onSubmit={(editedCard)=>this.props.editCardThunk(editedCard,'todo')}
+                        editableCard={editableCard}
                     />
                 }
                 {
                     isOpenConfirm && <Confirm
                         deleteCard={() => this.props.deleteAllCheckedCardThunk(checkedCards)}
                         countOrCardTitle={isCheckedCard ? isCheckedCard.title : checkedCards.size}
+                        onHide={this.props.toggleOpenConfirm}
                     />
                 }
                 {
@@ -145,11 +152,10 @@ const mapDispatchToProps = {
     editCardThunk,
     toggleOpenModal,
     toggleOpenConfirm,
-    toggleSetCardModal,
+    toggleSetCard,
     toggleCheckedAll,
     toggleCheckCard,
-    toggleOpenEditModal,
-    toggleStatusThunk
+    cardToggleStatus
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todo)

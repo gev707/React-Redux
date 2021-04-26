@@ -1,5 +1,5 @@
 import types from '../action.Types'
-import { isRequired, maxLength, minLength, validateEmail } from '../../Components/helpers/validators'
+import { isRequired, maxLength, minLength, validateEmail } from '../../helpers/validators'
 const maxLength30 = maxLength(30)
 const minLength3 = minLength(3)
 const initialState = {
@@ -23,7 +23,7 @@ const initialState = {
 const contactReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.CHANGE_VALUES: {
-            const {name,value} = action.target
+            const { name, value } = action.target
             let valid = true;
             let error = null;
             error = isRequired(value) ||
@@ -49,7 +49,7 @@ const contactReducer = (state = initialState, action) => {
         }
         case types.CLOSE_AND_RESET: {
             return {
-               ...initialState,
+                ...initialState,
             }
         }
         default: return state;
