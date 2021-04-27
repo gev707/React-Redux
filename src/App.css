@@ -276,6 +276,10 @@ label {
  h1{
    margin-top: 3rem !important;
  }
+ .modal-dialog {
+  margin: 1.75rem auto;
+  height: 100vh !important;
+}
 }
 .modal-title {
   margin-bottom: 0;
@@ -357,7 +361,11 @@ label {
   .dropdown-menu {
     min-width: 7rem;
   }
-
+  .modal-dialog {
+    max-width: 500px;
+    margin: 1.75rem auto;
+    height: 70vh !important;
+}
 }
 @media screen and (min-width: 1200px){
   .container {
