@@ -16,22 +16,22 @@ import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 const About = () => {
     const sections = [
         {
-            text:`This is my first React project, however, 
+            text: `This is my first React project, however, 
             building a todo application can be a great way to learn
             React and solidify some of the basic principles of the library.
             So today, we will be building a simple React app.`,
             image: aboutImage,
             figcaption: 'My Todo List !',
-            alt:'myTodoList'
+            alt: 'myTodoList'
         }
-        
+
     ];
-    const section=sections.map((section,index)=>{
+    const section = sections.map((section, index) => {
         return (
             <div key={index}>
                 <h4 className={styles.aboutText}>{section.text}</h4>
                 <figure>
-                    <img src={section.image} alt={section.alt}/>
+                    <img src={section.image} alt={section.alt} />
                     <figcaption>{section.figcaption}</figcaption>
                 </figure>
             </div>
@@ -40,7 +40,7 @@ const About = () => {
     return (
         <div className={styles.aboutHolder}>
             <div className={styles.aboutWrapper}>
-            <h1 className={styles.aboutTitle}>Hi Dear Reader!</h1>
+                <h1 className={styles.aboutTitle}>Hi Dear Reader!</h1>
                 <div className={styles.aboutSidebar}>
                     <Card >
                         <Image className={styles.userImage} roundedCircle src={userImage} />
@@ -82,7 +82,7 @@ const About = () => {
                 </div>
                 <div className={styles.aboutContent}>
                     <h2>My First Project</h2>
-                   {section}
+                    {section}
                 </div>
             </div>
         </div>

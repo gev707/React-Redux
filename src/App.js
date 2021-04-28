@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './Components/Navbar/Navbar';
 //pages
 import ToDo from './Components/pages/Todo/ToDo';
@@ -69,9 +69,9 @@ const router = [
   },
 ];
 const App = (props) => {
-  const { error,success, isOpen } = props;
+  const { error, success, isOpen } = props;
   useEffect(() => {
-   error && toast.error(`${error}`,{
+    error && toast.error(`${error}`, {
       position: "bottom-left",
       autoClose: 3000,
       hideProgressBar: false,
@@ -79,20 +79,20 @@ const App = (props) => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-   })
+    })
   }, [error]);
   useEffect(() => {
-    success && toast.success(`${success}`,{
-       position: "bottom-left",
-       autoClose: 3000,
-       hideProgressBar: false,
-       closeOnClick: true,
-       pauseOnHover: true,
-       draggable: true,
-       progress: undefined,
+    success && toast.success(`${success}`, {
+      position: "bottom-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
     })
-   }, [success])
-  
+  }, [success])
+
   const rout = router.map((item, index) => {
     return (
       <Route
@@ -108,7 +108,6 @@ const App = (props) => {
       <div onClick={props.toggleOpenNavbar} className='openNav'>
         <span className={!isOpen ? 'toggleSpan' : 'activeSpan'}></span>
       </div>
-
       {
         isOpen && <Navbar
           toggleNavbar={props.toggleOpenNavbar}

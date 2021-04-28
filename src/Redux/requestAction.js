@@ -1,19 +1,9 @@
-//import request from '../Components/helpers/requests'
 import types from './action.Types'
-// Action Creators for Request
-const API_HOST = 'http://localhost:3001';
-
-// export const getCardThunk = () => (dispatch) => {
-//     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
-//     request(`${API_HOST}/task`)
-//         .then(data => dispatch({ type: types.SET_CARDS, data }))
-//         .catch(error => dispatch({ type: types.ERROR, error: error.message }))
-//         .finally(() => dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false }))
-// }
+const API_HOST = process.env.REACT_APP_URL;
 
 export const getCardThunk = (data = {}) => (dispatch) => {
     const searchData = { ...data }
-    let url = 'http://localhost:3001/task';
+    let url = `${API_HOST}/task`;
     let query = '?';
     for (let key in searchData) {
         let value = searchData[key];

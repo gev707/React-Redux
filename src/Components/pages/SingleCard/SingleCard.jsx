@@ -21,7 +21,6 @@ const SingleCard = (props) => {
     const {
         singleCard,
         isEditModalOpen,
-
         //functions
         getSingleCardThunk,
         deleteSingleCardThunk,
@@ -32,10 +31,10 @@ const SingleCard = (props) => {
     useEffect(() => {
         const { id } = props.match.params;
         getSingleCardThunk(id)
-        return ()=> {
+        return () => {
             reset();
         }
-    }, [props.match.params, getSingleCardThunk,reset])
+    }, [props.match.params, getSingleCardThunk, reset])
 
     const deleteSingleCard = () => {
         const { _id } = singleCard
@@ -43,12 +42,9 @@ const SingleCard = (props) => {
         props.history.push('/')
     }
 
-
-
     if (singleCard === {}) return <Spinner />
     else {
         return (
-
             <>
                 <div className={styles.singleCardHolder}>
                     <div className={styles.goBackPage}>
@@ -88,8 +84,6 @@ const SingleCard = (props) => {
             </>
         )
     }
-
-
 }
 const mapStateToProps = state => {
     return {

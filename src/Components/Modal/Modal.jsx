@@ -20,7 +20,7 @@ const Modal = (props) => {
         reset
 
     } = props
-    const { title,description,date,} = props.state
+    const { title, description, date, } = props.state
     const handleSubmit = ({ key, type }) => {
         if (!title || !description || (type === 'keypress' && key !== 'Enter')) return;
         const formData = {
@@ -32,11 +32,11 @@ const Modal = (props) => {
 
     useEffect(() => {
         getEditCard(editableCard);
-        return ()=>{
+        return () => {
             reset()
         }
 
-    }, [getEditCard, editableCard,reset])
+    }, [getEditCard, editableCard, reset])
     return (
         <div
             className={styles.modalHolder}
@@ -95,7 +95,7 @@ Modal.propTypes = {
     onSubmit: PropTypes.func.isRequired
 }
 const mapStateToProps = state => {
-   
+
     return {
         state: state.modalState
     }

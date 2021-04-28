@@ -120,7 +120,7 @@ const Search = (props) => {
                         >Search</Button>
                     </Form>
                     <Nav className="">
-                    <DropdownButton
+                        <DropdownButton
                             id="dropdown-basic-button"
                             title='Dates'
                         >
@@ -171,9 +171,9 @@ const Search = (props) => {
                         >
                             {statusType}
                         </DropdownButton>
-                       
+
                     </Nav>
-                    
+
                 </Navbar.Collapse>
             </Navbar>
 

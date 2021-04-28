@@ -25,7 +25,7 @@ const Task = ({
             <div className={styles.taskFlex}>
                 <NavLink to={`/card/${card._id}`}><p className={styles.para}>{card.title}</p></NavLink>
                 <p className={styles.description}>- Description - <br />{card.description}</p>
-                <p>Date: {card.date.slice(0,10)}</p>
+                <p>Date: {card.date.slice(0, 10)}</p>
                 <div>
                     <button className={styles.taskBtn}>
                         <FontAwesomeIcon
@@ -39,12 +39,12 @@ const Task = ({
                             onClick={() => onEdit(card)}
                         />
                     </button>
-                    <button 
+                    <button
                         className={styles.taskBtn}
                         onClick={() => toggleStatus(card)}
                     >
-                        { card.status === 'active' &&  <FontAwesomeIcon icon={faHourglassHalf}/>}
-                        { card.status === 'done' &&  <FontAwesomeIcon icon={faCheckCircle}/>}
+                        {card.status === 'active' && <FontAwesomeIcon icon={faHourglassHalf} />}
+                        {card.status === 'done' && <FontAwesomeIcon icon={faCheckCircle} />}
                     </button>
                 </div>
 

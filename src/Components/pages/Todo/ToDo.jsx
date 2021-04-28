@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import Task from '../../Cards/Card';
 import Search from '../../Search/Search'
 import Modal from '../../Modal/Modal';
-//import EditModal from '../../Modal/EditModal';
 import Confirm from '../../Confirm/Confirm';
 import styles from "./todo.module.css";
 import Spinner from "../../Spinner/Spinner";
@@ -31,10 +30,10 @@ class Todo extends PureComponent {
         this.props.toggleSetCard(editableCard)
     }
 
-    componentDidMount=() =>{
+    componentDidMount = () => {
         this.props.getCardThunk()
     }
-    
+
     render() {
         const {
             cards,
@@ -56,7 +55,7 @@ class Todo extends PureComponent {
                 isChecked={checkedCards.has(card._id)}
                 toggleOpenModal={this.props.toggleOpenModal}
                 onEdit={this.toggleSetCardModal}
-                toggleStatus={(card)=>cardToggleStatus(card)}
+                toggleStatus={(card) => cardToggleStatus(card)}
             />
         });
         return (
@@ -105,7 +104,7 @@ class Todo extends PureComponent {
                 {
                     editableCard && <Modal
                         onHide={this.toggleSetCardModal}
-                        onSubmit={(editedCard)=>this.props.editCardThunk(editedCard,'todo')}
+                        onSubmit={(editedCard) => this.props.editCardThunk(editedCard, 'todo')}
                         editableCard={editableCard}
                     />
                 }
