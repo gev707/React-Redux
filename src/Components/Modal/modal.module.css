@@ -16,9 +16,9 @@
 .modalClose{
     transition: width 0.5s ease;
 }
-.btnSave{
-    
+.btnSave{ 
    margin-top: 2rem;
+   padding: 1rem;
 }
 .btnSave button{
     background: none;
