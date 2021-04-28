@@ -102,3 +102,11 @@ figure figcaption {
         overflow-y: scroll;
     }
 }
+@media screen and (min-width:1200px) {
+    figure {
+        width: 50%;
+    }
+    .aboutText {
+        width: 50%;
+    }
+}
