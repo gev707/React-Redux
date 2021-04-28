@@ -22,7 +22,7 @@ const About = () => {
             So today, we will be building a simple React app.`,
             image: aboutImage,
             figcaption: 'My Todo List !',
-            alt: 'myTodoList'
+            alt: 'todoList'
         }
 
     ];
