@@ -23,6 +23,13 @@ const singleCardReducer = (state = initialState, action) => {
                 isEditModalOpen: !state.isEditModalOpen
             }
         }
+        // case types.CLOSE_SINGLE_CARD_MODAL: {
+        //     return {
+        //         ...state,
+        //         isEditModalOpen:false
+        //     }
+        // }
+        
         case types.RESET: {
             return {
                 ...initialState

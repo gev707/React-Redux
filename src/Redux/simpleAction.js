@@ -50,6 +50,9 @@ export const closeEditModal = ()=>(dispatch)=> {
 export const toggleOpenEditModal = ()=> (dispatch)=>{
     dispatch({ type:types.TOGGLE_OPEN_SINGLE_CARD_MODAL})
 }
+export const closeSingleCardModal = ()=> (dispatch)=>{
+    dispatch({ type:types.CLOSE_SINGLE_CARD_MODAL})
+}
 //searching actions
 export const setFilterValue = (name,value) => dispatch=> {
     dispatch({type:types.SET_DROPDOWN_FILTER,name,value})

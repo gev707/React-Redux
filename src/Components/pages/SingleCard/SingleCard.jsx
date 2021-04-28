@@ -26,6 +26,7 @@ const SingleCard = (props) => {
         deleteSingleCardThunk,
         toggleOpenEditModal,
         editCardThunk,
+        
         reset
     } = props
     useEffect(() => {
@@ -42,7 +43,7 @@ const SingleCard = (props) => {
         props.history.push('/')
     }
 
-    if (singleCard === null) return <Spinner />
+    if (singleCard===null) return <Spinner />
     else {
         return (
             <>
@@ -76,7 +77,7 @@ const SingleCard = (props) => {
                 </div>
                 {
                     isEditModalOpen && <Modal
-                        onHide={toggleOpenEditModal}
+                        onHide={getSingleCardThunk}
                         onSubmit={(singleCard) => editCardThunk(singleCard, 'singleCard')}
                         editableCard={singleCard}
                     />

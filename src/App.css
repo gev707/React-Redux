@@ -4,6 +4,14 @@
   display: block;
   text-align: center;
 }
+
+.navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+  align-items: center;
+ margin:1rem 0 ;
+  
+}
 ::-webkit-scrollbar{
   width: 5px;
 }
@@ -289,7 +297,7 @@ label {
 }
 @media screen and (min-width:320px) and (max-width:767px) {
   h1 {
-    font-size: 18px;
+    font-size: 30px;
   } 
   .navbar-brand {
     margin: 1rem 0;
@@ -353,6 +361,7 @@ label {
     display: flex!important;
     flex-basis: auto;
     justify-content: space-between;
+    margin: 1rem 0 !important;
   }
   .form-group {
     display: flex;
@@ -405,4 +414,11 @@ label {
     max-width: 100%;
   } 
  
+}
+@media (min-width: 320px) and (max-width:500px) {
+ 
+  .btn {
+    padding: .7rem .75rem;
+    font-size: 11px;
+  }
 }
