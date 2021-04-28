@@ -43,7 +43,6 @@
     color:#1c263b;
 }
 .closeModal{
-    position: relative;
     cursor: pointer;
     transition:all 0.4s ease;
 }
@@ -183,7 +182,7 @@
    
   .modalHolder{
     width: 95%;
-    height:100%;
+    height:auto;
   }
   .btnSave button {
     padding: 10px 25px;
