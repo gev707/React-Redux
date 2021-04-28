@@ -38,7 +38,7 @@ const todoReducer = (state = initialState, action) => {
             const { checkedCards, cards } = state;
             let isCheckedCard = null;
             if (checkedCards.size === 1)
-                isCheckedCard = cards.find(card => card._id === [...checkedCards][0])
+                isCheckedCard = cards.find(card => card._id === [...checkedCards][0]);
             return {
                 ...state,
                 isCheckedCard,
@@ -104,6 +104,13 @@ const todoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 editableCard: action.editableCard,
+            }
+        }
+        case types.CLOSE_CONFIRM_MODAL: {
+            return {
+                ...state,
+                checkedCards: new Set(),
+                isOpenConfirm: !state.isOpenConfirm
             }
         }
         default: return state

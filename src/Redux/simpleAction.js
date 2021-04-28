@@ -6,6 +6,9 @@ export const toggleOpenModal = ()=> (dispatch)=>{
 export const toggleOpenConfirm = ()=> (dispatch)=>{
     dispatch({ type:types.TOGGLE_CONFIRM_MODAL })
 }
+export const closeConfirmModal=()=>(dispatch)=>{
+    dispatch({ type:types.CLOSE_CONFIRM_MODAL })
+}
 export const toggleCheckedAll = ()=> (dispatch)=>{
     dispatch({ type: types.TOGGLE_CHECK_ALL_CARDS })
 }
