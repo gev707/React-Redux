@@ -8,7 +8,6 @@ import { faExclamationTriangle, faCheckCircle, faCaretDown } from '@fortawesome/
 import { connect } from 'react-redux';
 import {
     changeValues,
-    toggleOpenModal,
     closeAndReset
 } from '../../../../Redux/simpleAction';
 import { getValues } from '../../../../Redux/requestAction'
@@ -34,7 +33,7 @@ const forms = [
     }
 ];
 class Contact extends PureComponent {
-
+    
     render() {
         const { formData, loading, isOpen } = this.props;
         const formGroup = forms.map((form, index) => {
@@ -135,7 +134,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     changeValues,
     getValues,
-    toggleOpenModal,
     closeAndReset
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Contact);

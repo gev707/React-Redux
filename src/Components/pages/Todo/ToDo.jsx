@@ -98,7 +98,7 @@ class Todo extends PureComponent {
                 </div>
                 {
                     isOpenModal && <Modal
-                        onHide={this.props.toggleOpenModal}
+                        onHide={()=>this.props.toggleOpenModal()}
                         onSubmit={(data) => this.props.addCardThunk(data)}
                     />
                 }

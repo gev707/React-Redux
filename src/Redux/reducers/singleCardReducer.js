@@ -1,6 +1,6 @@
 import types from '../action.Types'
 const initialState = {
-    singleCard: {},
+    singleCard:null,
     isEditModalOpen: false,
 }
 const singleCardReducer = (state = initialState, action) => {

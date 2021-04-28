@@ -30,7 +30,7 @@ const SingleCard = (props) => {
     } = props
     useEffect(() => {
         const { id } = props.match.params;
-        getSingleCardThunk(id)
+        getSingleCardThunk(id);
         return () => {
             reset();
         }
@@ -42,7 +42,7 @@ const SingleCard = (props) => {
         props.history.push('/')
     }
 
-    if (singleCard === {}) return <Spinner />
+    if (singleCard === null) return <Spinner />
     else {
         return (
             <>
@@ -58,7 +58,7 @@ const SingleCard = (props) => {
                     <div className={styles.singleCardReducerBody}>
                         <h1>- Title - <br />{singleCard.title}</h1>
                         <h2>- Description - <br />{singleCard.description}</h2>
-                        <p><small>- Date - {singleCard.date}</small></p>
+                        <p><small>- Date - {singleCard.date.slice(0,10)}</small></p>
                         <div className={styles.singleCardBtns}>
                             <button
                                 onClick={deleteSingleCard}

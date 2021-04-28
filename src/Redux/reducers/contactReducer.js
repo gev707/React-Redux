@@ -41,7 +41,7 @@ const contactReducer = (state = initialState, action) => {
                 }
             }
         }
-        case types.TOGGLE_OPEN_MODAL: {
+        case types.TOGGLE_OPEN_CONTACT_MODAL: {
             return {
                 ...state,
                 isOpen: !state.isOpen

@@ -26,6 +26,7 @@ const types = Object.freeze({
     //contact actions
     CHANGE_VALUES:'CHANGE_VALUES',
     CLOSE_AND_RESET:'CLOSE_AND_RESET',
+    TOGGLE_OPEN_CONTACT_MODAL:'TOGGLE_OPEN_CONTACT_MODAL',
     //addModal
     SET_DATE:'SET_DATE',
     //editmodal actions

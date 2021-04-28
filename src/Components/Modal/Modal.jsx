@@ -42,7 +42,7 @@ const Modal = (props) => {
             className={styles.modalHolder}
         >
             <div className={styles.closeModal}>
-                <span onClick={() => onHide()}></span>
+                <span onClick={onHide}></span>
             </div>
             <h2>{editableCard ? "Edit Card" : 'Create Your Card'}</h2>
             <div className='p-2'>
@@ -78,7 +78,7 @@ const Modal = (props) => {
             </div>
             <div className={styles.btnSave}>
                 <button
-                    onClick={(e) => onHide()}
+                    onClick={onHide}
                 >Close Card
                         </button>
                 <button

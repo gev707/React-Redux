@@ -114,7 +114,7 @@ export const getSingleCardThunk = id => dispatch => {
         .then(res => res.json())
         .then(data => {
             if (data.error) throw data.error
-            dispatch({ type: types.GET_SINGLE_CARD, data: data })
+            dispatch({ type: types.GET_SINGLE_CARD, data })
         })
         .catch(error => {
             dispatch({ type: types.ERROR, error: error.message })
@@ -159,7 +159,7 @@ export const getValues = (formData) => (dispatch) => {
         .then(res => res.json())
         .then(data => {
             if (data.error) throw data.error
-            dispatch({ type: types.TOGGLE_OPEN_MODAL })
+            dispatch({ type: types.TOGGLE_OPEN_CONTACT_MODAL })
             dispatch({ type: types.SUCCESS, success: 'Form Post SuccessFully' })
         })
         .catch(error => {

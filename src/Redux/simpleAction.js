@@ -57,3 +57,7 @@ export const changeSearchValue = target => dispatch => {
 export const setSearchDate =(name,date) => dispatch=> {
     dispatch({type:types.SET_SEARCH_DATE,name,date})
 }
+//contact form actions
+export const toggleOpenContactModal = ()=> (dispatch)=> {
+    dispatch({type:types.TOGGLE_OPEN_CONTACT_MODAL})
+}
