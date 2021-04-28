@@ -183,8 +183,7 @@
    
   .modalHolder{
     width: 95%;
-    max-height: 80vh;
-    min-height:75vh !important;
+    height:100%;
   }
   .btnSave button {
     padding: 10px 25px;
