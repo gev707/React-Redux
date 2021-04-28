@@ -17,11 +17,8 @@
     transition: width 0.5s ease;
 }
 .btnSave{
-    position: absolute;
-    display: flex;
-    bottom: 10px;
-    left:50%;
-    transform: translateX(-50%);
+    
+   margin-top: 2rem;
 }
 .btnSave button{
     background: none;
@@ -187,7 +184,7 @@
   .modalHolder{
     width: 95%;
     max-height: 80vh;
-    min-height:75vh;
+    min-height:75vh !important;
   }
   .btnSave button {
     padding: 10px 25px;
