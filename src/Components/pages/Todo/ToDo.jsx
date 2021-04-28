@@ -22,7 +22,8 @@ import {
     toggleSetCard,
     toggleCheckedAll,
     toggleCheckCard,
-    closeConfirmModal
+    closeConfirmModal,
+    closeEditModal
 } from "../../../Redux/simpleAction";
 
 class Todo extends PureComponent {
@@ -104,7 +105,7 @@ class Todo extends PureComponent {
                 }
                 {
                     editableCard && <Modal
-                        onHide={this.toggleSetCardModal}
+                        onHide={this.props.closeEditModal}
                         onSubmit={(editedCard) => this.props.editCardThunk(editedCard, 'todo')}
                         editableCard={editableCard}
                     />
@@ -156,7 +157,8 @@ const mapDispatchToProps = {
     toggleCheckedAll,
     toggleCheckCard,
     cardToggleStatus,
-    closeConfirmModal
+    closeConfirmModal,
+    closeEditModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todo)

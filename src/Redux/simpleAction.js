@@ -44,6 +44,9 @@ export const changeEditCardValue =(target)=>(dispatch)=> {
 export const setEditDate =(date)=>(dispatch)=> {
     dispatch({type:types.SET_EDIT_CARD_DATE,date})
 }
+export const closeEditModal = ()=>(dispatch)=> {
+ dispatch({type:types.CLOSE_EDIT_MODAL})
+}
 export const toggleOpenEditModal = ()=> (dispatch)=>{
     dispatch({ type:types.TOGGLE_OPEN_SINGLE_CARD_MODAL})
 }

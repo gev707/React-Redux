@@ -106,6 +106,12 @@ const todoReducer = (state = initialState, action) => {
                 editableCard: action.editableCard,
             }
         }
+        case types.CLOSE_EDIT_MODAL: {
+            return {
+                ...state,
+                editableCard: null,
+            }
+        }
         case types.CLOSE_CONFIRM_MODAL: {
             return {
                 ...state,
