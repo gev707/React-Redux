@@ -32,9 +32,9 @@ const SingleCard = (props) => {
     useEffect(() => {
         const { id } = props.match.params;
         getSingleCardThunk(id);
-        return () => {
-            reset();
-        }
+        // return () => {
+        //     reset();
+        // }
     }, [props.match.params, getSingleCardThunk, reset])
 
     const deleteSingleCard = () => {
