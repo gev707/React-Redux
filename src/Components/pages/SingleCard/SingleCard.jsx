@@ -32,9 +32,9 @@ const SingleCard = (props) => {
     useEffect(() => {
         const { id } = props.match.params;
         getSingleCardThunk(id);
-        // return () => {
-        //     reset();
-        // }
+        return () => {
+            reset();
+        }
     }, [props.match.params, getSingleCardThunk, reset])
 
     const deleteSingleCard = () => {
@@ -77,7 +77,7 @@ const SingleCard = (props) => {
                 </div>
                 {
                     isEditModalOpen && <Modal
-                        onHide={getSingleCardThunk}
+                        onHide={toggleOpenEditModal}
                         onSubmit={(singleCard) => editCardThunk(singleCard, 'singleCard')}
                         editableCard={singleCard}
                     />
