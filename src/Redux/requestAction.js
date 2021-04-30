@@ -79,6 +79,18 @@ export const deleteAllCheckedCardThunk = (checkedCards) => dispatch => {
         .finally(() => dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false }))
 
 }
+
+export const getSingleCardThunk = id => dispatch => {
+    fetch(`${API_HOST}/task/${id}`)
+        .then(res => res.json())
+        .then(data => {
+           if (data.error) throw data.error
+            dispatch({ type: types.GET_SINGLE_CARD, data })
+        })
+        .catch(error => {
+            dispatch({ type: types.ERROR, error: error.message })
+        })
+}
 export const editCardThunk = (editedCard, page = 'todo') => (dispatch) => {
     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
     fetch(`${API_HOST}/task/${editedCard._id}`, {
@@ -97,7 +109,8 @@ export const editCardThunk = (editedCard, page = 'todo') => (dispatch) => {
                 dispatch({ type: types.SUCCESS, success: 'Edit Card SuccessFull' })
             }
             else {
-                dispatch({ type: types.EDIT_CARD, data })
+                dispatch({ type: types.EDIT_CARD, data})
+                dispatch({ type: types.CLOSE_EDIT_MODAL })
                 dispatch({ type: types.SUCCESS, success: 'Edit Single Card SuccessFull' })
             }
         })
@@ -108,20 +121,6 @@ export const editCardThunk = (editedCard, page = 'todo') => (dispatch) => {
             dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false })
         })
 }
-export const getSingleCardThunk = id => dispatch => {
-    dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
-    fetch(`${API_HOST}/task/${id}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) throw data.error
-            dispatch({ type: types.GET_SINGLE_CARD, data })
-        })
-        .catch(error => {
-            dispatch({ type: types.ERROR, error: error.message })
-        })
-        .finally(() => dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false }))
-}
-
 export const deleteSingleCardThunk = (_id) => dispatch => {
     dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
     fetch(`${API_HOST}/task/${_id}`, {

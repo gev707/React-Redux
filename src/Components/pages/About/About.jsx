@@ -28,7 +28,7 @@ const About = () => {
     ];
     const section = sections.map((section, index) => {
         return (
-            <div key={index}>
+            <div style={{padding:'1rem 0'}} key={index}>
                 <h4 className={styles.aboutText}>{section.text}</h4>
                 <figure>
                     <img src={section.image} alt={section.alt} />
@@ -40,9 +40,9 @@ const About = () => {
     return (
         <div className={styles.aboutHolder}>
             <div className={styles.aboutWrapper}>
-                <h1 className={styles.aboutTitle}>Hi Dear Reader!</h1>
                 <div className={styles.aboutSidebar}>
-                    <Card >
+                    <div className={styles.fixedCard}>
+                    <Card>
                         <Image className={styles.userImage} roundedCircle src={userImage} />
                         <Card.Body>
                             <Card.Title>Gevorg Margaryan</Card.Title>
@@ -79,9 +79,11 @@ const About = () => {
                             </Card.Link>
                         </Card.Body>
                     </Card>
+                    </div>
                 </div>
                 <div className={styles.aboutContent}>
-                    <h2>My First Project</h2>
+                    <h1 className={styles.aboutTitle}>Hi Dear Reader!</h1>
+                    <h2 className={styles.contentTitle}>My First Project</h2>
                     {section}
                 </div>
             </div>

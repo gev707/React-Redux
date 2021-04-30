@@ -63,14 +63,14 @@ class Todo extends PureComponent {
         return (
             <section className='container'>
                 <div className={editableCard || isOpenModal || isOpenConfirm ? 'filter' : "noFilter"}>
-                    <h1>This is ToDo List</h1>
+                    <h1>ToDo List</h1>
                     <Search />
                     <div className={styles.inputHolder}>
                         <button
                             className={styles.btnAddText}
                             onClick={this.props.toggleOpenModal}
                             disabled={checkedCards.size !== 0}
-                        >Add Card Modal
+                        >Add Card
                         </button>
                     </div>
                     <div className={styles.btnHolder}>

@@ -1,5 +1,13 @@
 import styles from './search.module.css'
-import { Navbar, DropdownButton, Dropdown, Form, Button, Nav, FormControl } from "react-bootstrap";
+import { 
+    Navbar, 
+    DropdownButton, 
+    Dropdown, 
+    Form, 
+    Button, 
+    Nav, 
+    FormControl 
+} from "react-bootstrap";
 import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import { getCardThunk } from '../../Redux/requestAction'

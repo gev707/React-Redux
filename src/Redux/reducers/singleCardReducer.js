@@ -1,7 +1,7 @@
 import types from '../action.Types'
 const initialState = {
     singleCard:null,
-    isEditModalOpen: false,
+    isOpenModal:false
 }
 const singleCardReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -17,13 +17,13 @@ const singleCardReducer = (state = initialState, action) => {
                 card: null
             }
         }
-        case types.TOGGLE_OPEN_SINGLE_CARD_MODAL: {
+        case types.TOGGLE_MODAL: {
             return {
                 ...state,
-                isEditModalOpen: !state.isEditModalOpen
+                isOpenModal: !state.isOpenModal
             }
         }
-        case types.RESET: {
+        case types.RESET : {
             return {
                 ...initialState
             }

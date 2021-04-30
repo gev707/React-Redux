@@ -3,7 +3,7 @@ const initialState = {
     loading: false,
     isOpen:false,
     error: '',
-    success:''
+    success:'',
 }
 const globalReducer = (state = initialState, action) => {
     switch (action.type) {

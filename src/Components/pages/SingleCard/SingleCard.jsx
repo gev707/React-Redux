@@ -12,7 +12,7 @@ import {
 } from '../../../Redux/requestAction'
 import {
     toggleOpenEditModal,
-    reset
+    reset,
 } from '../../../Redux/simpleAction'
 import React, { useEffect } from 'react'
 import Modal from '../../Modal/Modal';
@@ -20,30 +20,34 @@ import Modal from '../../Modal/Modal';
 const SingleCard = (props) => {
     const {
         singleCard,
-        isEditModalOpen,
+        isOpenModal,
         //functions
         getSingleCardThunk,
         deleteSingleCardThunk,
         toggleOpenEditModal,
         editCardThunk,
-        
-        reset
+        reset,
+       
     } = props
+    const { id } = props.match.params;
     useEffect(() => {
-        const { id } = props.match.params;
         getSingleCardThunk(id);
-        return () => {
+        return ()=> {
             reset();
         }
-    }, [props.match.params, getSingleCardThunk, reset])
+    }, [getSingleCardThunk,id,reset])
 
+    const closeSingleCardModal = () => {
+        props.history.push('/')
+    }
+    
     const deleteSingleCard = () => {
         const { _id } = singleCard
         deleteSingleCardThunk(_id)
         props.history.push('/')
     }
 
-    if (singleCard===null) return <Spinner />
+    if (!singleCard) return <Spinner />
     else {
         return (
             <>
@@ -76,9 +80,9 @@ const SingleCard = (props) => {
                     </div>
                 </div>
                 {
-                    isEditModalOpen && <Modal
-                        onHide={toggleOpenEditModal}
-                        onSubmit={(singleCard) => editCardThunk(singleCard, 'singleCard')}
+                  isOpenModal && <Modal
+                        onHide={closeSingleCardModal}
+                        onSubmit={(singleCard) => editCardThunk(singleCard)}
                         editableCard={singleCard}
                     />
                 }
@@ -89,7 +93,7 @@ const SingleCard = (props) => {
 const mapStateToProps = state => {
     return {
         singleCard: state.singleCardState.singleCard,
-        isEditModalOpen: state.singleCardState.isEditModalOpen
+        isOpenModal: state.singleCardState.isOpenModal,
     }
 }
 const mapDispatchToProps = {
@@ -97,6 +101,6 @@ const mapDispatchToProps = {
     editCardThunk,
     deleteSingleCardThunk,
     toggleOpenEditModal,
-    reset
+    reset, 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SingleCard)

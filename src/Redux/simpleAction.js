@@ -15,7 +15,6 @@ export const toggleCheckedAll = () => (dispatch) => {
 export const toggleCheckCard = (_id) => (dispatch) => {
     dispatch({ type: types.TOGGLE_CHECK_CARD, _id })
 }
-
 export const reset = () => (dispatch) => {
     dispatch({ type: types.RESET })
 }
@@ -48,11 +47,9 @@ export const closeEditModal = () => (dispatch) => {
     dispatch({ type: types.CLOSE_EDIT_MODAL })
 }
 export const toggleOpenEditModal = () => (dispatch) => {
-    dispatch({ type: types.TOGGLE_OPEN_SINGLE_CARD_MODAL })
+    dispatch({ type: types.TOGGLE_MODAL })
 }
-// export const closeSingleCardModal = () => (dispatch) => {
-//     dispatch({ type: types.CLOSE_SINGLE_CARD_MODAL })
-// }
+
 //searching actions
 export const setFilterValue = (name, value) => dispatch => {
     dispatch({ type: types.SET_DROPDOWN_FILTER, name, value })

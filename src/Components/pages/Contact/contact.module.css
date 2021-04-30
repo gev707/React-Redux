@@ -36,7 +36,7 @@
 .formBody {
     width:500px;
     height:auto;
-    background: rgb(172, 170, 170);
+    background: rgb(23 31 51);
     box-shadow: 5px -4px 5px rgb(0 0 0 /10%);
     transform:perspective(600px) rotateY(-10deg);
     -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0005);
@@ -45,7 +45,7 @@
 .formHookBody {
     width:500px;
     height:auto;
-    background: rgb(148, 168, 168);
+    background: #212529;
     box-shadow: 5px -4px 5px rgb(0 0 0 /10%);
     transform:perspective(600px) rotateY(-10deg);
     -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0005);
@@ -78,7 +78,7 @@
 .formReducerBody{
     width:500px;
     height:auto;
-    background: rgb(121 148 148);
+    background: #0d1117;
     box-shadow: 5px -4px 5px rgb(0 0 0 /10%);
     transform:perspective(600px) rotateY(-10deg);
     -webkit-box-reflect:below 2px  linear-gradient(transparent,transparent,#0005);

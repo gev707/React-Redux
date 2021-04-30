@@ -18,7 +18,6 @@ const Modal = (props) => {
         //actions
         getEditCard,
         reset
-
     } = props
     const { title, description, date, } = props.state
     const handleSubmit = ({ key, type }) => {
@@ -97,7 +96,7 @@ Modal.propTypes = {
 const mapStateToProps = state => {
 
     return {
-        state: state.modalState
+        state: state.modalState,
     }
 }
 const mapDispatchToProps = {
