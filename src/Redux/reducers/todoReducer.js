@@ -8,6 +8,7 @@ const initialState = {
     checkedCards: new Set(),
     deleteCardId: null,
     isCheckedCard: null,
+
 }
 
 const todoReducer = (state = initialState, action) => {
@@ -15,7 +16,7 @@ const todoReducer = (state = initialState, action) => {
         case types.SET_CARDS: {
             return {
                 ...state,
-                cards: action.data
+                cards: action.data,
             }
         }
         case types.ADD_CARD: {

@@ -7,8 +7,8 @@ import { faTrashAlt, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import {
     getSingleCardThunk,
-    deleteSingleCardThunk,
-    editCardThunk
+    editCardThunk,
+    deleteOneCardThunk
 } from '../../../Redux/requestAction'
 import {
     toggleOpenEditModal,
@@ -20,10 +20,11 @@ import Modal from '../../Modal/Modal';
 const SingleCard = (props) => {
     const {
         singleCard,
-        isOpenModal,
+        isOpenEditModal,
+        loading,
         //functions
         getSingleCardThunk,
-        deleteSingleCardThunk,
+        deleteOneCardThunk,
         toggleOpenEditModal,
         editCardThunk,
         reset,
@@ -43,11 +44,11 @@ const SingleCard = (props) => {
     
     const deleteSingleCard = () => {
         const { _id } = singleCard
-        deleteSingleCardThunk(_id)
+        deleteOneCardThunk(_id)
         props.history.push('/')
     }
 
-    if (!singleCard) return <Spinner />
+    if (!singleCard || loading) return <Spinner />
     else {
         return (
             <>
@@ -80,9 +81,9 @@ const SingleCard = (props) => {
                     </div>
                 </div>
                 {
-                  isOpenModal && <Modal
+                 isOpenEditModal && <Modal
                         onHide={closeSingleCardModal}
-                        onSubmit={(singleCard) => editCardThunk(singleCard)}
+                        onSubmit={(singleCard) => editCardThunk(singleCard,'singlecard')}
                         editableCard={singleCard}
                     />
                 }
@@ -93,14 +94,15 @@ const SingleCard = (props) => {
 const mapStateToProps = state => {
     return {
         singleCard: state.singleCardState.singleCard,
-        isOpenModal: state.singleCardState.isOpenModal,
+        isOpenEditModal: state.singleCardState.isOpenEditModal,
+        loading:state.globalState.loading
     }
 }
 const mapDispatchToProps = {
     getSingleCardThunk,
     editCardThunk,
-    deleteSingleCardThunk,
     toggleOpenEditModal,
     reset, 
+    deleteOneCardThunk
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SingleCard)

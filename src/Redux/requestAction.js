@@ -108,9 +108,8 @@ export const editCardThunk = (editedCard, page = 'todo') => (dispatch) => {
                 dispatch({ type: types.EDIT_CARD, data, page })
                 dispatch({ type: types.SUCCESS, success: 'Edit Card SuccessFull' })
             }
-            else {
-                dispatch({ type: types.EDIT_CARD, data})
-                dispatch({ type: types.CLOSE_EDIT_MODAL })
+            else if (page ==='singlecard'){
+                dispatch({ type: types.GET_SINGLE_CARD, data})
                 dispatch({ type: types.SUCCESS, success: 'Edit Single Card SuccessFull' })
             }
         })
@@ -121,21 +120,7 @@ export const editCardThunk = (editedCard, page = 'todo') => (dispatch) => {
             dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false })
         })
 }
-export const deleteSingleCardThunk = (_id) => dispatch => {
-    dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: true })
-    fetch(`${API_HOST}/task/${_id}`, {
-        method: 'DELETE'
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) throw data.error
-            dispatch({ type: types.DELETE_SINGLE_CARD, _id })
-        })
-        .catch(error => {
-            dispatch({ type: types.ERROR, error: error.message })
-        })
-        .finally(() => dispatch({ type: types.SET_OR_REMOVE_LOADING, isLoading: false }))
-}
+
 
 export const getValues = (formData) => (dispatch) => {
     const contactData = { ...formData }
